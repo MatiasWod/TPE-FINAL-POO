@@ -132,7 +132,7 @@ public class PaintPane extends BorderPane {
 		});
 
 		//FALTA HACER QUE AL CLICKEAR EL BUTTON YA PASE ADELANTE/ATRAS DE UNA. CAMBIO DE BOTON CAPAZ SOLUCIONA
-		buttonsBox.setOnMouseClicked( event-> {
+		setOnMouseClicked( event-> {
 			if(fondoButton.isSelected()){
 				if(hasSelected()) {
 					canvasState.toBack(selectedFigure);
