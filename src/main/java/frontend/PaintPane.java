@@ -1,10 +1,7 @@
 package frontend;
 
 import backend.CanvasState;
-import backend.model.Circle;
-import backend.model.Figure;
-import backend.model.Point;
-import backend.model.Rectangle;
+import backend.model.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -31,6 +28,9 @@ public class PaintPane extends BorderPane {
 	private ToggleButton selectionButton = new ToggleButton("Seleccionar");
 	private ToggleButton rectangleButton = new ToggleButton("Rectángulo");
 	private ToggleButton circleButton = new ToggleButton("Círculo");
+	private ToggleButton elipseButton = new ToggleButton("Elipse");
+	private ToggleButton squareButton = new ToggleButton("Cuadrado");
+	private ToggleButton lineButton = new ToggleButton("Linea");
 
 	private Button fondoButton = new Button("Al Fondo");
 	private Button frenteButton = new Button("Al Frente");
@@ -47,8 +47,8 @@ public class PaintPane extends BorderPane {
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
-		ToggleButton[] toggleArr = {selectionButton, rectangleButton, circleButton};
-		ButtonBase[] toolsArr = {selectionButton, rectangleButton, circleButton,fondoButton,frenteButton};
+		ToggleButton[] toggleArr = {selectionButton, rectangleButton, circleButton,elipseButton,squareButton,lineButton};
+		ButtonBase[] toolsArr = {selectionButton, rectangleButton, circleButton,elipseButton,squareButton,lineButton,fondoButton,frenteButton};
 		ToggleGroup tools = new ToggleGroup();
 		for (ButtonBase tool : toolsArr) {
 			tool.setMinWidth(90);
@@ -71,7 +71,7 @@ public class PaintPane extends BorderPane {
 			if (startPoint == null) {
 				return;
 			}
-			if (endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY()) {//Hay que poner que no este seleccionado el boton de linea
+			if ( ( endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY() ) && !(lineButton.isSelected()) ) {
 				return;
 			}
 			Figure newFigure = null;
@@ -80,9 +80,17 @@ public class PaintPane extends BorderPane {
 			} else if (circleButton.isSelected()) {
 				double circleRadius = Math.abs(endPoint.getX() - startPoint.getX());
 				newFigure = new Circle(startPoint, circleRadius);
-			} else {
-				return;
-			}
+			} else if (elipseButton.isSelected()){
+				if( ( endPoint.getX() - startPoint.getX() ) > ( ( endPoint.getY() - startPoint.getY() ) ) ){//Hago estos if para ver cual va como axis mayor/menor
+					newFigure = new Elipse(new Point((endPoint.getX() - startPoint.getX() )/2, (endPoint.getY() - startPoint.getY() )/2),endPoint.getX() - startPoint.getX(),endPoint.getY() - startPoint.getY());
+				} else{
+					newFigure = new Elipse(new Point((endPoint.getX() - startPoint.getX() )/2, (endPoint.getY() - startPoint.getY() )/2),endPoint.getY() - startPoint.getY(),endPoint.getX() - startPoint.getX());
+				}
+			}else if(squareButton.isSelected()){
+				newFigure = new Square(startPoint,endPoint);
+			} else if(lineButton.isSelected()) {
+				newFigure = new Line(startPoint,endPoint);
+			}else{return;}
 
 			canvasState.addFigure(newFigure);
 			startPoint = null;
