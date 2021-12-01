@@ -9,8 +9,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -31,6 +30,9 @@ public class PaintPane extends BorderPane {
 	private ToggleButton rectangleButton = new ToggleButton("Rectángulo");
 	private ToggleButton circleButton = new ToggleButton("Círculo");
 
+	private ToggleButton fondoButton = new ToggleButton("Al Fondo");
+	private ToggleButton frenteButton = new ToggleButton("Al Frente");
+
 	// Dibujar una figura
 	private Point startPoint;
 
@@ -43,7 +45,7 @@ public class PaintPane extends BorderPane {
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
-		ToggleButton[] toolsArr = {selectionButton, rectangleButton, circleButton};
+		ToggleButton[] toolsArr = {selectionButton, rectangleButton, circleButton, fondoButton, frenteButton};
 		ToggleGroup tools = new ToggleGroup();
 		for (ToggleButton tool : toolsArr) {
 			tool.setMinWidth(90);
@@ -60,6 +62,7 @@ public class PaintPane extends BorderPane {
 			startPoint = new Point(event.getX(), event.getY());
 		});
 		canvas.setOnMouseReleased(event -> {
+			boolean figureCreated=false;
 			Point endPoint = new Point(event.getX(), event.getY());
 			if(startPoint == null) {
 				return ;
@@ -70,15 +73,23 @@ public class PaintPane extends BorderPane {
 			Figure newFigure = null;
 			if(rectangleButton.isSelected()) {
 				newFigure = new Rectangle(startPoint, endPoint);
+				figureCreated=true;
 			}
 			else if(circleButton.isSelected()) {
 				double circleRadius = Math.abs(endPoint.getX() - startPoint.getX());
 				newFigure = new Circle(startPoint, circleRadius);
-			} else {
+				figureCreated=true;
+			}else if(fondoButton.isSelected()){
+				canvasState.toBack(selectedFigure);
+			}else if(frenteButton.isSelected()) {
+				canvasState.toFront(selectedFigure);
+			}else {
 				return ;
 			}
-			canvasState.addFigure(newFigure);
-			startPoint = null;
+			if ( figureCreated ){
+				canvasState.addFigure(newFigure);
+				startPoint = null;
+			}
 			redrawCanvas();
 		});
 		canvas.setOnMouseMoved(event -> {
@@ -159,5 +170,6 @@ public class PaintPane extends BorderPane {
 		}
 		return found;*/
 	}
+
 
 }
