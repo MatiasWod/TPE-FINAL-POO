@@ -80,9 +80,13 @@ public class PaintPane extends BorderPane {
 				newFigure = new Circle(startPoint, circleRadius);
 				figureCreated=true;
 			}else if(fondoButton.isSelected()){
-				canvasState.toBack(selectedFigure);
+				if(hasSelected()) {
+					canvasState.toBack(selectedFigure);
+				}
 			}else if(frenteButton.isSelected()) {
-				canvasState.toFront(selectedFigure);
+				if(hasSelected()) {
+					canvasState.toFront(selectedFigure);
+				}
 			}else {
 				return ;
 			}
@@ -171,5 +175,8 @@ public class PaintPane extends BorderPane {
 		return found;*/
 	}
 
+	private boolean hasSelected(){
+		return selectedFigure != null;
+	}
 
 }
