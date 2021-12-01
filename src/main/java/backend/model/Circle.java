@@ -1,5 +1,7 @@
 package backend.model;
 
+import javafx.scene.canvas.GraphicsContext;
+
 public class Circle extends Elipse {
 
     public Circle(Point centerPoint, double radius) {
@@ -15,4 +17,9 @@ public class Circle extends Elipse {
         return getMayorAxis();
     }
 
+    public void redraw (GraphicsContext gc){
+        double diameter = this.getRadius() * 2;
+        gc.fillOval(this.getCenterPoint().getX() - this.getRadius(), this.getCenterPoint().getY() - this.getRadius(), diameter, diameter);
+        gc.strokeOval(this.getCenterPoint().getX() - this.getRadius(), this.getCenterPoint().getY() - this.getRadius(), diameter, diameter);
+    }
 }

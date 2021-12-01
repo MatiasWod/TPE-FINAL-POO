@@ -1,5 +1,7 @@
 package backend.model;
 
+import javafx.scene.canvas.GraphicsContext;
+
 public class Rectangle extends Figure {
 
     private final Point topLeft, bottomRight;
@@ -26,5 +28,12 @@ public class Rectangle extends Figure {
     public boolean pointBelongs(Point p){
        return p.getX() > topLeft.getX() && p.getX() < bottomRight.getX() &&
                 p.getY() > topLeft.getY() && p.getY() < bottomRight.getY();
+    }
+
+    public void redraw(GraphicsContext gc){
+        gc.fillRect(this.getTopLeft().getX(), this.getTopLeft().getY(),
+                Math.abs(this.getTopLeft().getX() - this.getBottomRight().getX()), Math.abs(this.getTopLeft().getY() - this.getBottomRight().getY()));
+        gc.strokeRect(this.getTopLeft().getX(), this.getTopLeft().getY(),
+                Math.abs(this.getTopLeft().getX() - this.getBottomRight().getX()), Math.abs(this.getTopLeft().getY() - this.getBottomRight().getY()));
     }
 }
