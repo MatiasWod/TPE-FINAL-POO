@@ -10,4 +10,5 @@ public abstract class Figure {
 
      public abstract boolean equals(Object o);
 
+     public abstract void move( double diffX, double diffY);
 }

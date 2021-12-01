@@ -47,6 +47,11 @@ public class Elipse extends Figure{
     }//Como saber si un punto esta dentro de una elipse:https://www.i-ciencias.com/pregunta/4300/comprueba-si-un-punto-esta-dentro-de-una-elipse
 
 
+    @Override
     public void redraw (GraphicsContext gc){}
+    //FALTA IMPLEMENTAR
+
+    @Override
+    public void move(double diffX , double diffY ){}
     //FALTA IMPLEMENTAR
 }

@@ -46,4 +46,12 @@ public class Rectangle extends Figure {
         gc.strokeRect(this.getTopLeft().getX(), this.getTopLeft().getY(),
                 Math.abs(this.getTopLeft().getX() - this.getBottomRight().getX()), Math.abs(this.getTopLeft().getY() - this.getBottomRight().getY()));
     }
+
+    @Override
+    public void move( double diffX, double diffY){
+        this.getTopLeft().x += diffX;
+        this.getBottomRight().x += diffX;
+        this.getTopLeft().y += diffY;
+        this.getBottomRight().y += diffY;
+    };
 }
