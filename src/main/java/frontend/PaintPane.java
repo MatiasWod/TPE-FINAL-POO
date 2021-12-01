@@ -167,7 +167,8 @@ public class PaintPane extends BorderPane {
 	}
 
 	boolean figureBelongs(Figure figure, Point eventPoint) {
-		boolean found = false;
+		return figure.pointBelongs(eventPoint);
+		/*boolean found = false;
 		if(figure instanceof Rectangle) {
 			Rectangle rectangle = (Rectangle) figure;
 			found = eventPoint.getX() > rectangle.getTopLeft().getX() && eventPoint.getX() < rectangle.getBottomRight().getX() &&
@@ -177,7 +178,7 @@ public class PaintPane extends BorderPane {
 			found = Math.sqrt(Math.pow(circle.getCenterPoint().getX() - eventPoint.getX(), 2) +
 					Math.pow(circle.getCenterPoint().getY() - eventPoint.getY(), 2)) < circle.getRadius();
 		}
-		return found;
+		return found;*/
 	}
 
 }
