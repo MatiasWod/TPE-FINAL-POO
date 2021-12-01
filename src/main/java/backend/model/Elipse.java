@@ -27,4 +27,10 @@ public class Elipse extends Figure{
     public double getMinorAxis() {
         return sMinorAxis;
     }
+
+    @Override
+    public boolean pointBelongs(Point p){
+        return Math.pow(centerPoint.getX() - p.getX(),2)/(sMayorAxis*sMayorAxis) + Math.pow(centerPoint.getY() - p.getY(),2)/(sMinorAxis*sMinorAxis) <= 1;
+    }//Como saber si un punto esta dentro de una elipse:https://www.i-ciencias.com/pregunta/4300/comprueba-si-un-punto-esta-dentro-de-una-elipse
+
 }
