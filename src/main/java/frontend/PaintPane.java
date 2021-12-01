@@ -18,27 +18,27 @@ import javafx.scene.paint.Color;
 public class PaintPane extends BorderPane {
 
 	// BackEnd
-	CanvasState canvasState;
+	private CanvasState canvasState;
 
 	// Canvas y relacionados
-	Canvas canvas = new Canvas(800, 600);
-	GraphicsContext gc = canvas.getGraphicsContext2D();
-	Color lineColor = Color.BLACK;
-	Color fillColor = Color.YELLOW;
+	private Canvas canvas = new Canvas(800, 600);
+	private GraphicsContext gc = canvas.getGraphicsContext2D();
+	private Color lineColor = Color.BLACK;
+	private Color fillColor = Color.YELLOW;
 
 	// Botones Barra Izquierda
-	ToggleButton selectionButton = new ToggleButton("Seleccionar");
-	ToggleButton rectangleButton = new ToggleButton("Rectángulo");
-	ToggleButton circleButton = new ToggleButton("Círculo");
+	private ToggleButton selectionButton = new ToggleButton("Seleccionar");
+	private ToggleButton rectangleButton = new ToggleButton("Rectángulo");
+	private ToggleButton circleButton = new ToggleButton("Círculo");
 
 	// Dibujar una figura
-	Point startPoint;
+	private Point startPoint;
 
 	// Seleccionar una figura
-	Figure selectedFigure;
+	private Figure selectedFigure;
 
 	// StatusBar
-	StatusPane statusPane;
+	private StatusPane statusPane;
 
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 		this.canvasState = canvasState;
@@ -132,7 +132,7 @@ public class PaintPane extends BorderPane {
 		setRight(canvas);
 	}
 
-	void redrawCanvas() {
+	private void redrawCanvas() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		for(Figure figure : canvasState.figures()) {
 			if(figure.equals(selectedFigure)) {
@@ -145,7 +145,7 @@ public class PaintPane extends BorderPane {
 		}
 	}
 
-	boolean figureBelongs(Figure figure, Point eventPoint) {
+	private boolean figureBelongs(Figure figure, Point eventPoint) {
 		return figure.pointBelongs(eventPoint);
 		/*boolean found = false;
 		if(figure instanceof Rectangle) {
