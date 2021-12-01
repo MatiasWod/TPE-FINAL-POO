@@ -5,6 +5,8 @@ import backend.model.Circle;
 import backend.model.Figure;
 import backend.model.Point;
 import backend.model.Rectangle;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
@@ -30,8 +32,8 @@ public class PaintPane extends BorderPane {
 	private ToggleButton rectangleButton = new ToggleButton("Rectángulo");
 	private ToggleButton circleButton = new ToggleButton("Círculo");
 
-	private ToggleButton fondoButton = new ToggleButton("Al Fondo");
-	private ToggleButton frenteButton = new ToggleButton("Al Frente");
+	private Button fondoButton = new Button("Al Fondo");
+	private Button frenteButton = new Button("Al Frente");
 
 	// Dibujar una figura
 	private Point startPoint;
@@ -45,12 +47,15 @@ public class PaintPane extends BorderPane {
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
-		ToggleButton[] toolsArr = {selectionButton, rectangleButton, circleButton, fondoButton, frenteButton};
+		ToggleButton[] toggleArr = {selectionButton, rectangleButton, circleButton};
+		ButtonBase[] toolsArr = {selectionButton, rectangleButton, circleButton,fondoButton,frenteButton};
 		ToggleGroup tools = new ToggleGroup();
-		for (ToggleButton tool : toolsArr) {
+		for (ButtonBase tool : toolsArr) {
 			tool.setMinWidth(90);
-			tool.setToggleGroup(tools);
 			tool.setCursor(Cursor.HAND);
+		}
+		for(ToggleButton tool : toggleArr){
+			tool.setToggleGroup(tools);
 		}
 		VBox buttonsBox = new VBox(10);
 		buttonsBox.getChildren().addAll(toolsArr);
@@ -66,11 +71,11 @@ public class PaintPane extends BorderPane {
 			if (startPoint == null) {
 				return;
 			}
-			if (endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY()) {
+			if (endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY()) {//Hay que poner que no este seleccionado el boton de linea
 				return;
 			}
 			Figure newFigure = null;
-			if (rectangleButton.isSelected()) {
+			if (rectangleButton.isSelected()) {//Agregar if para elipse,square,linea
 				newFigure = new Rectangle(startPoint, endPoint);
 			} else if (circleButton.isSelected()) {
 				double circleRadius = Math.abs(endPoint.getX() - startPoint.getX());
@@ -132,19 +137,24 @@ public class PaintPane extends BorderPane {
 		});
 
 		//FALTA HACER QUE AL CLICKEAR EL BUTTON YA PASE ADELANTE/ATRAS DE UNA. CAMBIO DE BOTON CAPAZ SOLUCIONA
-		setOnMouseClicked( event-> {
-			if(fondoButton.isSelected()){
-				if(hasSelected()) {
+		fondoButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent actionEvent) {
+				if(hasSelected()){
 					canvasState.toBack(selectedFigure);
+					redrawCanvas();
 				}
-			}else if(frenteButton.isSelected()) {
-				if (hasSelected()) {
-					canvasState.toFront(selectedFigure);
-				}
-			}else{return;}
-			redrawCanvas();
+			}
 		});
-
+		frenteButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent actionEvent) {
+				if(hasSelected()){
+					canvasState.toFront(selectedFigure);
+					redrawCanvas();
+				}
+			}
+		});
 		setLeft(buttonsBox);
 		setRight(canvas);
 	}
