@@ -62,51 +62,38 @@ public class PaintPane extends BorderPane {
 			startPoint = new Point(event.getX(), event.getY());
 		});
 		canvas.setOnMouseReleased(event -> {
-			boolean figureCreated=false;
 			Point endPoint = new Point(event.getX(), event.getY());
-			if(startPoint == null) {
-				return ;
+			if (startPoint == null) {
+				return;
 			}
-			if(endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY()) {
-				return ;
+			if (endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY()) {
+				return;
 			}
 			Figure newFigure = null;
-			if(rectangleButton.isSelected()) {
+			if (rectangleButton.isSelected()) {
 				newFigure = new Rectangle(startPoint, endPoint);
-				figureCreated=true;
-			}
-			else if(circleButton.isSelected()) {
+			} else if (circleButton.isSelected()) {
 				double circleRadius = Math.abs(endPoint.getX() - startPoint.getX());
 				newFigure = new Circle(startPoint, circleRadius);
-				figureCreated=true;
-			}else if(fondoButton.isSelected()){
-				if(hasSelected()) {
-					canvasState.toBack(selectedFigure);
-				}
-			}else if(frenteButton.isSelected()) {
-				if(hasSelected()) {
-					canvasState.toFront(selectedFigure);
-				}
-			}else {
-				return ;
+			} else {
+				return;
 			}
-			if ( figureCreated ){
-				canvasState.addFigure(newFigure);
-				startPoint = null;
-			}
+
+			canvasState.addFigure(newFigure);
+			startPoint = null;
 			redrawCanvas();
 		});
 		canvas.setOnMouseMoved(event -> {
 			Point eventPoint = new Point(event.getX(), event.getY());
 			boolean found = false;
 			StringBuilder label = new StringBuilder();
-			for(Figure figure : canvasState.figures()) {
-				if(figureBelongs(figure, eventPoint)) {
+			for (Figure figure : canvasState.figures()) {
+				if (figureBelongs(figure, eventPoint)) {
 					found = true;
 					label.append(figure.toString());
 				}
 			}
-			if(found) {
+			if (found) {
 				statusPane.updateStatus(label.toString());
 			} else {
 				statusPane.updateStatus(eventPoint.toString());
@@ -114,12 +101,12 @@ public class PaintPane extends BorderPane {
 		});
 
 		canvas.setOnMouseClicked(event -> {
-			if(selectionButton.isSelected()) {
+			if (selectionButton.isSelected()) {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				boolean found = false;
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
 				for (Figure figure : canvasState.figures()) {
-					if(figureBelongs(figure, eventPoint)) {
+					if (figureBelongs(figure, eventPoint)) {
 						found = true;
 						selectedFigure = figure;
 						label.append(figure.toString());
@@ -135,14 +122,29 @@ public class PaintPane extends BorderPane {
 			}
 		});
 		canvas.setOnMouseDragged(event -> {
-			if(selectionButton.isSelected()) {
+			if (selectionButton.isSelected()) {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
 				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
-				selectedFigure.move( diffX , diffY );
+				selectedFigure.move(diffX, diffY);
 				redrawCanvas();
 			}
 		});
+
+		//FALTA HACER QUE AL CLICKEAR EL BUTTON YA PASE ADELANTE/ATRAS DE UNA. CAMBIO DE BOTON CAPAZ SOLUCIONA
+		buttonsBox.setOnMouseClicked( event-> {
+			if(fondoButton.isSelected()){
+				if(hasSelected()) {
+					canvasState.toBack(selectedFigure);
+				}
+			}else if(frenteButton.isSelected()) {
+				if (hasSelected()) {
+					canvasState.toFront(selectedFigure);
+				}
+			}else{return;}
+			redrawCanvas();
+		});
+
 		setLeft(buttonsBox);
 		setRight(canvas);
 	}
