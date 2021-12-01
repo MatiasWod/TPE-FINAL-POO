@@ -36,8 +36,15 @@ public class Line extends Figure{
     }
 
     @Override
-    public void redraw(GraphicsContext gc){}
+    public void redraw(GraphicsContext gc){
+        gc.strokeLine(startPoint.getX(), startPoint.getY(), endPoint.getX(), endPoint.getY());
+    }
 
     @Override
-    public void move( double diffX, double diffY){}   //FALTA IMPLEMENTAR
+    public void move( double diffX, double diffY){
+            startPoint.x += diffX;
+            startPoint.y += diffY;
+            endPoint.x += diffX;
+            endPoint.y += diffY;
+    }
 }
