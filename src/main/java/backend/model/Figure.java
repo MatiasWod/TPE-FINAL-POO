@@ -8,4 +8,6 @@ public abstract class Figure {
 
      public abstract void redraw (GraphicsContext gc);
 
+     public abstract boolean equals(Object o);
+
 }

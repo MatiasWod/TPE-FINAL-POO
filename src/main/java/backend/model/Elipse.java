@@ -31,6 +31,17 @@ public class Elipse extends Figure{
     }
 
     @Override
+    public boolean equals(Object o){
+        if(this == o)
+            return true;
+        if(!(o instanceof Elipse))
+            return false;
+        Elipse that = (Elipse) o;
+        return centerPoint.equals(that.getCenterPoint()) && Double.compare(sMayorAxis, that.getMayorAxis()) == 0
+                && Double.compare(sMinorAxis, that.getMinorAxis())==0;
+    }
+
+    @Override
     public boolean pointBelongs(Point p){
         return Math.pow(centerPoint.getX() - p.getX(),2)/(sMayorAxis*sMayorAxis) + Math.pow(centerPoint.getY() - p.getY(),2)/(sMinorAxis*sMinorAxis) <= 1;
     }//Como saber si un punto esta dentro de una elipse:https://www.i-ciencias.com/pregunta/4300/comprueba-si-un-punto-esta-dentro-de-una-elipse

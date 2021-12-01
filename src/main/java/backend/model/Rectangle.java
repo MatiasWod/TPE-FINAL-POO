@@ -30,6 +30,16 @@ public class Rectangle extends Figure {
                 p.getY() > topLeft.getY() && p.getY() < bottomRight.getY();
     }
 
+    @Override
+    public boolean equals(Object o){
+        if(this == o)
+            return true;
+        if(!(o instanceof Rectangle))
+            return false;
+        Rectangle that = (Rectangle) o;
+        return topLeft.equals(that.getTopLeft()) && bottomRight.equals(that.getBottomRight());
+    }
+
     public void redraw(GraphicsContext gc){
         gc.fillRect(this.getTopLeft().getX(), this.getTopLeft().getY(),
                 Math.abs(this.getTopLeft().getX() - this.getBottomRight().getX()), Math.abs(this.getTopLeft().getY() - this.getBottomRight().getY()));

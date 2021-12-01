@@ -145,7 +145,7 @@ public class PaintPane extends BorderPane {
 	void redrawCanvas() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		for(Figure figure : canvasState.figures()) {
-			if(figure == selectedFigure) {
+			if(figure.equals(selectedFigure)) {
 				gc.setStroke(Color.RED);
 			} else {
 				gc.setStroke(lineColor);

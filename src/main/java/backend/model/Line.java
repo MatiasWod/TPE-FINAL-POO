@@ -1,5 +1,7 @@
 package backend.model;
 
+import javafx.scene.canvas.GraphicsContext;
+
 public class Line extends Figure{
     private Point startPoint,endPoint;
 
@@ -19,8 +21,21 @@ public class Line extends Figure{
     }
 
     @Override
+    public boolean equals(Object o){
+        if(this == o)
+            return true;
+        if(!(o instanceof Line))
+            return false;
+        Line that = (Line) o;
+        return that.getStartPoint().equals(startPoint) && that.getEndPoint().equals(endPoint);
+    }
+
+    @Override
     public String toString(){
         return String.format("Linea [ %s , %s ]",startPoint,endPoint);
     }
+
+    @Override
+    public void redraw(GraphicsContext gc){}
 
 }
