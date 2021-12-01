@@ -1,5 +1,7 @@
 package backend.model;
 
+import javafx.scene.canvas.GraphicsContext;
+
 public class Elipse extends Figure{
     private Point centerPoint;
     private double sMayorAxis;
@@ -33,4 +35,7 @@ public class Elipse extends Figure{
         return Math.pow(centerPoint.getX() - p.getX(),2)/(sMayorAxis*sMayorAxis) + Math.pow(centerPoint.getY() - p.getY(),2)/(sMinorAxis*sMinorAxis) <= 1;
     }//Como saber si un punto esta dentro de una elipse:https://www.i-ciencias.com/pregunta/4300/comprueba-si-un-punto-esta-dentro-de-una-elipse
 
+
+    public void redraw (GraphicsContext gc){}
+    //FALTA IMPLEMENTAR
 }
