@@ -94,7 +94,7 @@ public class PaintPane extends BorderPane {
 				return;
 			}
 			Figure newFigure = null;
-			if (rectangleButton.isSelected()) {//Agregar if para elipse,square,linea
+			if (rectangleButton.isSelected()) {
 				newFigure = new Rectangle(startPoint, endPoint, bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
 			} else if (circleButton.isSelected()) {
 				double circleRadius = Math.abs(endPoint.getX() - startPoint.getX());
@@ -110,7 +110,7 @@ public class PaintPane extends BorderPane {
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
 				boolean selFlag = false;
 				for(Figure figure :canvasState.figures()){
-					if( figure.contained(rectSelection)){
+					if(figure.contained(rectSelection)){
 						selectedFigure.add(figure);
 						label.append(" , ").append(figure.toString());
 						selFlag=true;
@@ -172,8 +172,10 @@ public class PaintPane extends BorderPane {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
 				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
-				for ( Figure figure : selectedFigure ){
-					figure.move(diffX, diffY);
+				if(!selectedFigure.isEmpty()){
+					for ( Figure figure : selectedFigure ){
+						figure.move(diffX, diffY);
+					}
 				}
 				redrawCanvas();
 			}
