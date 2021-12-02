@@ -64,5 +64,5 @@ public class Elipse extends Figure{
         topLeft.x+=diffX;
         topLeft.y+=diffY;
     }
-    //FALTA IMPLEMENTAR
+
 }
