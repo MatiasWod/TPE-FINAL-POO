@@ -26,8 +26,7 @@ public class Rectangle extends Figure {
 
     @Override
     public boolean pointBelongs(Point p){
-       return p.getX() > topLeft.getX() && p.getX() < bottomRight.getX() &&
-                p.getY() > topLeft.getY() && p.getY() < bottomRight.getY();
+       return p.getX() > topLeft.getX() && p.getX() < bottomRight.getX() && p.getY() > topLeft.getY() && p.getY() < bottomRight.getY();
     }
 
     @Override
@@ -54,5 +53,5 @@ public class Rectangle extends Figure {
         this.getBottomRight().x += diffX;
         this.getTopLeft().y += diffY;
         this.getBottomRight().y += diffY;
-    };
+    }
 }

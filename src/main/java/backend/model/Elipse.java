@@ -53,8 +53,8 @@ public class Elipse extends Figure{
 
     @Override
     public void redraw (GraphicsContext gc){
-        gc.fillOval(topLeft.getX(), topLeft.getY(),widthAxis*2 ,heightAxis *2);
-        gc.strokeOval(topLeft.getX(), topLeft.getY(), widthAxis*2, heightAxis*2);
+        gc.fillOval(topLeft.getX(), topLeft.getY(),widthAxis ,heightAxis );
+        gc.strokeOval(topLeft.getX(), topLeft.getY(), widthAxis, heightAxis);
     }
 
 
