@@ -107,17 +107,27 @@ public class PaintPane extends BorderPane {
 				newFigure = new Line(startPoint,endPoint, bordeColor.getValue());
 			} else if(selectionButton.isSelected()){
 				Rectangle rectSelection = new Rectangle(startPoint, endPoint, bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
+				StringBuilder label = new StringBuilder("Se seleccionó: ");
+				boolean selFlag = false;
 				for(Figure figure :canvasState.figures()){
 					if( figure.contained(rectSelection)){
 						selectedFigure.add(figure);
+						label.append(" , ").append(figure.toString());
+						selFlag=true;
 					}
+				}
+				if(selFlag){
+					statusPane.updateStatus(label.toString());
+				} else{
+					selectedFigure=null;
+					statusPane.updateStatus("Ninguna figura encontrada");
 				}
 				flag=false;
 			}else{return;}
 			if (flag) {
 				canvasState.addFigure(newFigure);
-				startPoint = null;
 			}
+			startPoint = null;
 			redrawCanvas();
 		});
 		canvas.setOnMouseMoved(event -> {
