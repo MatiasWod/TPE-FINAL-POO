@@ -106,9 +106,9 @@ public class PaintPane extends BorderPane {
 			} else if(lineButton.isSelected()) {
 				newFigure = new Line(startPoint,endPoint, bordeColor.getValue());
 			} else if(selectionButton.isSelected()){
-				newFigure = new Rectangle(startPoint, endPoint, bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
+				Rectangle rectSelection = new Rectangle(startPoint, endPoint, bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
 				for(Figure figure :canvasState.figures()){
-					if( figure.contained(newFigure)){
+					if( figure.contained(rectSelection)){
 						selectedFigure.add(figure);
 					}
 				}
