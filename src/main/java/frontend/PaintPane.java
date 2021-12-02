@@ -91,7 +91,6 @@ public class PaintPane extends BorderPane {
 			} else if(lineButton.isSelected()) {
 				newFigure = new Line(startPoint,endPoint);
 			}else{return;}
-
 			canvasState.addFigure(newFigure);
 			startPoint = null;
 			redrawCanvas();
@@ -119,15 +118,17 @@ public class PaintPane extends BorderPane {
 				boolean found = false;
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
 				for (Figure figure : canvasState.figures()) {
-					if (figureBelongs(figure, eventPoint)) {
+					if (figure.pointBelongs(eventPoint)) {//Estaba figureBelongs
 						found = true;
 						selectedFigure = figure;
 						label.append(figure.toString());
 					}
 				}
 				if (found) {
+					System.out.println("encontro la figura");
 					statusPane.updateStatus(label.toString());
 				} else {
+					System.out.println("Alto cuadrado");
 					selectedFigure = null;
 					statusPane.updateStatus("Ninguna figura encontrada");
 				}
@@ -137,14 +138,15 @@ public class PaintPane extends BorderPane {
 		canvas.setOnMouseDragged(event -> {
 			if (selectionButton.isSelected()) {
 				Point eventPoint = new Point(event.getX(), event.getY());
-				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
-				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
-				selectedFigure.move(diffX, diffY);
-				redrawCanvas();
+				if(figureSelected(eventPoint)){
+					double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
+					double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
+					selectedFigure.move(diffX, diffY);
+					redrawCanvas();
+				}
 			}
 		});
 
-		//FALTA HACER QUE AL CLICKEAR EL BUTTON YA PASE ADELANTE/ATRAS DE UNA. CAMBIO DE BOTON CAPAZ SOLUCIONA
 		fondoButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
@@ -165,6 +167,14 @@ public class PaintPane extends BorderPane {
 		});
 		setLeft(buttonsBox);
 		setRight(canvas);
+	}
+
+	private boolean figureSelected(Point p){
+		for(Figure f : canvasState.figures()){
+			if(f.pointBelongs(p))
+				return true;
+		}
+		return false;
 	}
 
 	private void redrawCanvas() {

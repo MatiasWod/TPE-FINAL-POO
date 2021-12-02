@@ -48,8 +48,10 @@ public class Elipse extends Figure{
 
 
     @Override
-    public void redraw (GraphicsContext gc){}
-    //FALTA IMPLEMENTAR
+    public void redraw (GraphicsContext gc){
+
+    }
+
 
     @Override
     public void move(double diffX , double diffY ){}

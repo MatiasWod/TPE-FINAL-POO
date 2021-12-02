@@ -20,7 +20,8 @@ public class Square extends Rectangle{
 
     @Override
     public boolean pointBelongs(Point p){
-        return super.pointBelongs(p);
+        return p.getX() > getTopLeft().getX() && p.getX() < getBottomRight().getX() &&
+                p.getY() > getTopLeft().getY() && p.getY() < getBottomRight().getY();
     }
 
 }
