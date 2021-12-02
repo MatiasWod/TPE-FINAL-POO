@@ -1,19 +1,26 @@
 package backend.model;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class Elipse extends Figure{
     private Point centerPoint;
     private Point topLeft;
     private double heightAxis;
     private double widthAxis;
+    private Color bordeColor;
+    private double bordeAncho;
+    private Color figureColor;
 
-    public Elipse(Point tL, double heightAxis,double widthAxis){
+    public Elipse(Point tL, double heightAxis, double widthAxis, Color bordeColor, double bordeAncho, Color figureColor){
         this.centerPoint = new Point(tL.getX() + widthAxis,Math.abs(tL.getY() + heightAxis));
         this.topLeft = tL;
         this.heightAxis = heightAxis;
         this.widthAxis = widthAxis;
         System.out.printf("%s",this);
+        this.bordeColor=bordeColor;
+        this.bordeAncho = bordeAncho;
+        this.figureColor = figureColor;
     }
 
     @Override
@@ -63,6 +70,31 @@ public class Elipse extends Figure{
         centerPoint.y += diffY;
         topLeft.x+=diffX;
         topLeft.y+=diffY;
+    }
+
+    @Override
+    public Color getBordeColor() {
+        return bordeColor;
+    }
+    @Override
+    public void setBordeColor(Color bordeColor) {
+        this.bordeColor = bordeColor;
+    }
+    @Override
+    public double getBordeAncho() {
+        return bordeAncho;
+    }
+    @Override
+    public void setBordeAncho(double anchoColor) {
+        this.bordeAncho = anchoColor;
+    }
+    @Override
+    public Color getFigureColor() {
+        return figureColor;
+    }
+    @Override
+    public void setFigureColor(Color figureColor) {
+        this.figureColor = figureColor;
     }
 
 }

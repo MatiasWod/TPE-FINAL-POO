@@ -1,14 +1,22 @@
 package backend.model;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class Rectangle extends Figure {
 
     private final Point topLeft, bottomRight;
+    private Color bordeColor;
+    private double bordeAncho;
+    private Color figureColor;
 
-    public Rectangle(Point topLeft, Point bottomRight) {
+
+    public Rectangle(Point topLeft, Point bottomRight , Color bordeColor, double bordeAncho, Color figureColor) {
         this.topLeft = topLeft;
         this.bottomRight = bottomRight;
+        this.bordeColor=bordeColor;
+        this.bordeAncho = bordeAncho;
+        this.figureColor = figureColor;
     }
 
     public Point getTopLeft() {
@@ -53,5 +61,30 @@ public class Rectangle extends Figure {
         this.getBottomRight().x += diffX;
         this.getTopLeft().y += diffY;
         this.getBottomRight().y += diffY;
+    }
+
+    @Override
+    public Color getBordeColor() {
+        return bordeColor;
+    }
+    @Override
+    public void setBordeColor(Color bordeColor) {
+        this.bordeColor = bordeColor;
+    }
+    @Override
+    public double getBordeAncho() {
+        return bordeAncho;
+    }
+    @Override
+    public void setBordeAncho(double anchoColor) {
+        this.bordeAncho = anchoColor;
+    }
+    @Override
+    public Color getFigureColor() {
+        return figureColor;
+    }
+    @Override
+    public void setFigureColor(Color figureColor) {
+        this.figureColor = figureColor;
     }
 }

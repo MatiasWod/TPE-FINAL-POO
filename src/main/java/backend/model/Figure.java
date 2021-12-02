@@ -1,8 +1,16 @@
 package backend.model;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public abstract class Figure {
+
+     public abstract Color getBordeColor();
+     public abstract void setBordeColor(Color bordeColor);
+     public abstract double getBordeAncho();
+     public abstract void setBordeAncho(double anchoColor);
+     public abstract Color getFigureColor();
+     public abstract void setFigureColor(Color figureColor);
 
      public abstract boolean pointBelongs(Point p);
 

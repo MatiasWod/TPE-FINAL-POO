@@ -1,13 +1,16 @@
 package backend.model;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class Line extends Figure{
     private Point startPoint,endPoint;
+    private Color bordeColor;
 
-    public Line(Point startPoint,Point endPoint){
+    public Line(Point startPoint, Point endPoint, Color bordeColor){
         this.startPoint=startPoint;
         this.endPoint=endPoint;
+        this.bordeColor = bordeColor;
     }
 
     public Point getStartPoint(){return startPoint;}
@@ -46,5 +49,28 @@ public class Line extends Figure{
             startPoint.y += diffY;
             endPoint.x += diffX;
             endPoint.y += diffY;
+    }
+
+    @Override
+    public Color getBordeColor() {
+        return this.bordeColor;
+    }
+    @Override
+    public void setBordeColor(Color bordeColor) {
+        this.bordeColor = bordeColor;
+    }
+    @Override
+    public double getBordeAncho() {
+        return 0.0D;
+    }
+    @Override
+    public void setBordeAncho(double anchoColor) {
+    }
+    @Override
+    public Color getFigureColor() {
+        return Color.WHITE;
+    }
+    @Override
+    public void setFigureColor(Color figureColor) {
     }
 }
