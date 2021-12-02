@@ -40,6 +40,7 @@ public class Rectangle extends Figure {
         return topLeft.equals(that.getTopLeft()) && bottomRight.equals(that.getBottomRight());
     }
 
+    @Override
     public void redraw(GraphicsContext gc){
         gc.fillRect(this.getTopLeft().getX(), this.getTopLeft().getY(),
                 Math.abs(this.getTopLeft().getX() - this.getBottomRight().getX()), Math.abs(this.getTopLeft().getY() - this.getBottomRight().getY()));
