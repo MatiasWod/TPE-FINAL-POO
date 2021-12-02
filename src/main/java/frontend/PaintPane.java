@@ -97,7 +97,7 @@ public class PaintPane extends BorderPane {
 			if (rectangleButton.isSelected()) {//Agregar if para elipse,square,linea
 				newFigure = new Rectangle(startPoint, endPoint, bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
 			} else if (circleButton.isSelected()) {
-				double circleRadius = Math.abs(endPoint.getX() - startPoint.getX());
+				double circleRadius = Math.sqrt( Math.pow(endPoint.getX() - startPoint.getX(),2) + Math.pow(endPoint.getY() - startPoint.getY(),2) );
 				newFigure = new Circle(startPoint, circleRadius,bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
 			} else if (elipseButton.isSelected()){
 				newFigure = new Elipse(startPoint,Math.abs(startPoint.getY() - endPoint.getY())/2,Math.abs(endPoint.getX() - startPoint.getX())/2,bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
