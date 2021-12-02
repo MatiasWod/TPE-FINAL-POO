@@ -162,7 +162,9 @@ public class PaintPane extends BorderPane {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
 				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
-				selectedFigure.move(diffX, diffY);
+				for ( Figure figure : selectedFigure ){
+					figure.move(diffX, diffY);
+				}
 				redrawCanvas();
 			}
 		});
@@ -189,7 +191,9 @@ public class PaintPane extends BorderPane {
 			@Override
 			public void handle(ActionEvent actionEvent) {
 				if(hasSelected()){
-					canvasState.toBack(selectedFigure);
+					for(Figure figure: selectedFigure) {
+						canvasState.toBack(figure);
+					}
 					redrawCanvas();
 				}
 			}
@@ -198,7 +202,9 @@ public class PaintPane extends BorderPane {
 			@Override
 			public void handle(ActionEvent actionEvent) {
 				if(hasSelected()){
-					canvasState.toFront(selectedFigure);
+					for(Figure figure: selectedFigure) {
+						canvasState.toFront(figure);
+					}
 					redrawCanvas();
 				}
 			}
