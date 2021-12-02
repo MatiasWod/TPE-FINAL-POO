@@ -6,7 +6,7 @@ import javafx.scene.paint.Color;
 public class Circle extends Elipse {
 
     public Circle(Point centerPoint, double radius, Color bordeColor, double bordeAncho, Color figureColor) {
-        super(new Point(centerPoint.getX()- radius, centerPoint.getY()+radius ),radius,radius,bordeColor,bordeAncho,figureColor);
+        super(new Point(centerPoint.getX()- radius, centerPoint.getY()-radius ),radius,radius,bordeColor,bordeAncho,figureColor);
     }
 
     @Override

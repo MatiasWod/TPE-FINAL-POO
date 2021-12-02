@@ -97,7 +97,7 @@ public class PaintPane extends BorderPane {
 			if (rectangleButton.isSelected()) {
 				newFigure = new Rectangle(startPoint, endPoint, bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
 			} else if (circleButton.isSelected()) {
-				double circleRadius = Math.abs(endPoint.getX() - startPoint.getX());
+				double circleRadius = Math.sqrt( Math.pow(endPoint.getX() - startPoint.getX(),2) + Math.pow(endPoint.getY() - startPoint.getY(),2) );
 				newFigure = new Circle(startPoint, circleRadius,bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
 			} else if (elipseButton.isSelected()){
 				newFigure = new Elipse(startPoint,Math.abs(startPoint.getY() - endPoint.getY())/2,Math.abs(endPoint.getX() - startPoint.getX())/2,bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
@@ -106,7 +106,7 @@ public class PaintPane extends BorderPane {
 			} else if(lineButton.isSelected()) {
 				newFigure = new Line(startPoint,endPoint, bordeColor.getValue());
 			} else if(selectionButton.isSelected()){
-				Rectangle rectSelection = new Rectangle(startPoint, endPoint, bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
+				Rectangle rectSelection = new Rectangle(startPoint, endPoint, Color.BLACK, 0, Color.BLACK);
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
 				boolean selFlag = false;
 				for(Figure figure :canvasState.figures()){
@@ -147,6 +147,7 @@ public class PaintPane extends BorderPane {
 			}
 		});
 		canvas.setOnMouseClicked(event -> {
+			selectedFigure.clear();
 			if (selectionButton.isSelected()) {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				boolean found = false;
@@ -154,7 +155,7 @@ public class PaintPane extends BorderPane {
 				for (Figure figure : canvasState.figures()) {
 					if (figureBelongs(figure, eventPoint)) {
 						found = true;
-						selectedFigure.clear();
+						selectedFigure.add(figure);
 						label.append(figure.toString());
 					}
 				}
