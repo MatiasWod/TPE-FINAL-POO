@@ -208,9 +208,11 @@ public class PaintPane extends BorderPane {
 	}
 
 	private void refreshFigureColors(){
-		selectedFigure.setBordeColor(bordeColor.getValue());
-		selectedFigure.setBordeAncho(bordeSlider.getValue());
-		selectedFigure.setFigureColor(rellenoColor.getValue());
+		for( Figure figure : selectedFigure ){
+			figure.setBordeColor(bordeColor.getValue());
+			figure.setBordeAncho(bordeSlider.getValue());
+			figure.setFigureColor(rellenoColor.getValue());
+		}
 		redrawCanvas();
 	}
 
