@@ -14,6 +14,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PaintPane extends BorderPane {
 
 	// BackEnd
@@ -44,7 +47,7 @@ public class PaintPane extends BorderPane {
 	private Point startPoint;
 
 	// Seleccionar una figura
-	private Figure selectedFigure;
+	private List<Figure> selectedFigure = new ArrayList<>();
 
 	// StatusBar
 	private StatusPane statusPane;
@@ -82,6 +85,7 @@ public class PaintPane extends BorderPane {
 			startPoint = new Point(event.getX(), event.getY());
 		});
 		canvas.setOnMouseReleased(event -> {
+			boolean flag=true;
 			Point endPoint = new Point(event.getX(), event.getY());
 			if (startPoint == null) {
 				return;
@@ -101,10 +105,19 @@ public class PaintPane extends BorderPane {
 				newFigure = new Square(startPoint,new Point(endPoint.getX(), (startPoint.getY()+endPoint.getX()-startPoint.getX())),bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
 			} else if(lineButton.isSelected()) {
 				newFigure = new Line(startPoint,endPoint, bordeColor.getValue());
+			} else if(selectionButton.isSelected()){
+				newFigure = new Rectangle(startPoint, endPoint, bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
+				for(Figure figure :canvasState.figures()){
+					if( figure.contained(newFigure)){
+						selectedFigure.add(figure);
+					}
+				}
+				flag=false;
 			}else{return;}
-
-			canvasState.addFigure(newFigure);
-			startPoint = null;
+			if (flag) {
+				canvasState.addFigure(newFigure);
+				startPoint = null;
+			}
 			redrawCanvas();
 		});
 		canvas.setOnMouseMoved(event -> {
@@ -131,14 +144,14 @@ public class PaintPane extends BorderPane {
 				for (Figure figure : canvasState.figures()) {
 					if (figureBelongs(figure, eventPoint)) {
 						found = true;
-						selectedFigure = figure;
+						selectedFigure.clear();
 						label.append(figure.toString());
 					}
 				}
 				if (found) {
 					statusPane.updateStatus(label.toString());
 				} else {
-					selectedFigure = null;
+					selectedFigure=null;
 					statusPane.updateStatus("Ninguna figura encontrada");
 				}
 				redrawCanvas();
