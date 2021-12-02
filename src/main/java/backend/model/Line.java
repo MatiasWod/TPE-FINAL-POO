@@ -73,4 +73,8 @@ public class Line extends Figure{
     @Override
     public void setFigureColor(Color figureColor) {
     }
+    @Override
+    public boolean contained(Rectangle r){
+        return r.pointBelongs(startPoint) && r.pointBelongs(endPoint);
+    }
 }

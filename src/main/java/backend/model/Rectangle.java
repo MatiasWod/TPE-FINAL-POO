@@ -87,4 +87,9 @@ public class Rectangle extends Figure {
     public void setFigureColor(Color figureColor) {
         this.figureColor = figureColor;
     }
+
+    @Override
+    public boolean contained(Rectangle r){
+        return r.pointBelongs(topLeft) && r.pointBelongs(bottomRight);
+    }
 }
