@@ -116,8 +116,8 @@ public class PaintPane extends BorderPane {
 			}else{return;}
 			if (flag) {
 				canvasState.addFigure(newFigure);
-				startPoint = null;
 			}
+			startPoint=null;
 			redrawCanvas();
 		});
 		canvas.setOnMouseMoved(event -> {
