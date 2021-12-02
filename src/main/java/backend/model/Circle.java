@@ -5,7 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 public class Circle extends Elipse {
 
     public Circle(Point centerPoint, double radius) {
-        super(new Point(centerPoint.getX() + radius, centerPoint.getY()+radius ),radius,radius);
+        super(new Point(centerPoint.getX() - radius, centerPoint.getY()+radius ),radius,radius);
     }
 
     @Override
