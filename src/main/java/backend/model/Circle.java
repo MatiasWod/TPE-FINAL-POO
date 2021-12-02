@@ -24,9 +24,4 @@ public class Circle extends Elipse {
         gc.strokeOval(this.getCenterPoint().getX() - this.getRadius(), this.getCenterPoint().getY() - this.getRadius(), diameter, diameter);
     }
 
-    @Override
-    public void move( double diffX , double diffY ){
-        this.getCenterPoint().x += diffX;
-        this.getCenterPoint().y += diffY;
-    }
 }

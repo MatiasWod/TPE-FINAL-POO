@@ -10,7 +10,6 @@ public class Elipse extends Figure{
 
     public Elipse(Point tL, double heightAxis,double widthAxis){
         this.centerPoint = new Point(tL.getX() + widthAxis,tL.getY() - heightAxis);
-        System.out.println(centerPoint.toString());
         this.topLeft = tL;
         this.heightAxis = heightAxis;
         this.widthAxis = widthAxis;
@@ -60,6 +59,11 @@ public class Elipse extends Figure{
 
 
     @Override
-    public void move(double diffX , double diffY ){}
+    public void move( double diffX , double diffY ){
+        centerPoint.x += diffX;
+        centerPoint.y += diffY;
+        topLeft.x+=diffX;
+        topLeft.y+=diffY;
+    }
     //FALTA IMPLEMENTAR
 }
