@@ -87,7 +87,7 @@ public class PaintPane extends BorderPane {
 					newFigure = new Elipse(new Point((endPoint.getX() - startPoint.getX() )/2, (endPoint.getY() - startPoint.getY() )/2),endPoint.getY() - startPoint.getY(),endPoint.getX() - startPoint.getX());
 				}
 			}else if(squareButton.isSelected()){
-				newFigure = new Square(startPoint,endPoint);
+				newFigure = new Square(startPoint,new Point(endPoint.getX(), (startPoint.getY()-endPoint.getX()+startPoint.getX())));
 			} else if(lineButton.isSelected()) {
 				newFigure = new Line(startPoint,endPoint);
 			}else{return;}
