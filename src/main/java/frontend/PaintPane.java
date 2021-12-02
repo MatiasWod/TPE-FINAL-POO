@@ -106,7 +106,7 @@ public class PaintPane extends BorderPane {
 			} else if(lineButton.isSelected()) {
 				newFigure = new Line(startPoint,endPoint, bordeColor.getValue());
 			} else if(selectionButton.isSelected()){
-				Rectangle rectSelection = new Rectangle(startPoint, endPoint, bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
+				Rectangle rectSelection = new Rectangle(startPoint, endPoint, Color.BLACK, 0, Color.BLACK);
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
 				boolean selFlag = false;
 				for(Figure figure :canvasState.figures()){
@@ -147,6 +147,7 @@ public class PaintPane extends BorderPane {
 			}
 		});
 		canvas.setOnMouseClicked(event -> {
+			selectedFigure.clear();
 			if (selectionButton.isSelected()) {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				boolean found = false;
@@ -154,7 +155,7 @@ public class PaintPane extends BorderPane {
 				for (Figure figure : canvasState.figures()) {
 					if (figureBelongs(figure, eventPoint)) {
 						found = true;
-						selectedFigure.clear();
+						selectedFigure.add(figure);
 						label.append(figure.toString());
 					}
 				}
