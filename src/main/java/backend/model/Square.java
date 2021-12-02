@@ -6,6 +6,7 @@ public class Square extends Rectangle{
 
     public Square(Point topLeft,Point bottomRight){
         super(topLeft,bottomRight);
+        System.out.println(toString());
     }
 
     @Override

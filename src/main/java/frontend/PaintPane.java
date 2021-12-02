@@ -81,13 +81,9 @@ public class PaintPane extends BorderPane {
 				double circleRadius = Math.abs(endPoint.getX() - startPoint.getX());
 				newFigure = new Circle(startPoint, circleRadius);
 			} else if (elipseButton.isSelected()){
-				if( ( endPoint.getX() - startPoint.getX() ) > ( ( endPoint.getY() - startPoint.getY() ) ) ){//Hago estos if para ver cual va como axis mayor/menor
-					newFigure = new Elipse(new Point((endPoint.getX() - startPoint.getX() )/2, (endPoint.getY() - startPoint.getY() )/2),endPoint.getX() - startPoint.getX(),endPoint.getY() - startPoint.getY());
-				} else{
-					newFigure = new Elipse(new Point((endPoint.getX() - startPoint.getX() )/2, (endPoint.getY() - startPoint.getY() )/2),endPoint.getY() - startPoint.getY(),endPoint.getX() - startPoint.getX());
-				}
+				newFigure = new Elipse(startPoint,startPoint.getY() - endPoint.getY(),endPoint.getX() - startPoint.getX());
 			}else if(squareButton.isSelected()){
-				newFigure = new Square(startPoint,new Point(endPoint.getX(), (startPoint.getY()-endPoint.getX()+startPoint.getX())));
+				newFigure = new Square(startPoint,new Point(endPoint.getX(), (startPoint.getY()+endPoint.getX()-startPoint.getX())));
 			} else if(lineButton.isSelected()) {
 				newFigure = new Line(startPoint,endPoint);
 			}else{return;}

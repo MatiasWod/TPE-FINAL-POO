@@ -5,16 +5,16 @@ import javafx.scene.canvas.GraphicsContext;
 public class Circle extends Elipse {
 
     public Circle(Point centerPoint, double radius) {
-        super(centerPoint,radius,radius);
+        super(new Point(centerPoint.getX() + radius, centerPoint.getY()+radius ),radius,radius);
     }
 
     @Override
     public String toString() {
-        return String.format("Círculo [Centro: %s, Radio: %.2f]", getCenterPoint(), getMayorAxis());
+        return String.format("Círculo [Centro: %s, Radio: %.2f]", getCenterPoint(), getHeightAxis());
     }
 
     public double getRadius() {
-        return getMayorAxis();
+        return getHeightAxis();
     }
 
     @Override
