@@ -71,6 +71,13 @@ public class Elipse extends Figure{
         topLeft.x+=diffX;
         topLeft.y+=diffY;
     }
+    @Override
+    public boolean contained(Rectangle r){
+        return r.pointBelongs(new Point(centerPoint.getX() - widthAxis,centerPoint.getY()))
+                && r.pointBelongs(new Point(centerPoint.getX() + widthAxis,centerPoint.getY()))
+                && r.pointBelongs(new Point(centerPoint.getX(),centerPoint.getY() + heightAxis))
+                && r.pointBelongs(new Point(centerPoint.getX(),centerPoint.getY() - heightAxis));
+    }
 
     @Override
     public Color getBordeColor() {

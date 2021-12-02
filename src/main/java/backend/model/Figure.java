@@ -21,4 +21,6 @@ public abstract class Figure {
      public abstract void move( double diffX, double diffY);
 
      public abstract String toString();
+
+     public abstract boolean contained(Rectangle r);
 }
