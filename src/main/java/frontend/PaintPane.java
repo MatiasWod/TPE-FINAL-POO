@@ -147,7 +147,7 @@ public class PaintPane extends BorderPane {
 			}
 		});
 		canvas.setOnMouseClicked(event -> {
-			selectedFigure.clear();
+			selectedFigure.clear(); //ESTO ROMPE TODO CADA VE QUE CLICKEAS
 			if (selectionButton.isSelected()) {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				boolean found = false;
