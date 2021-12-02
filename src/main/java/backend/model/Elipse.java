@@ -4,30 +4,32 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class Elipse extends Figure{
     private Point centerPoint;
-    private double sMayorAxis;
-    private double sMinorAxis;
+    private Point topLeft;
+    private double heightAxis;
+    private double widthAxis;
 
-    public Elipse(Point cp, double mayorA,double minorA){
-        this.centerPoint = cp;
-        this.sMayorAxis = mayorA;
-        this.sMinorAxis = minorA;
+    public Elipse(Point tL, double heightAxis,double widthAxis){
+        this.centerPoint = new Point(tL.getX() + widthAxis,tL.getY() - heightAxis);
+        this.topLeft = tL;
+        this.heightAxis = heightAxis;
+        this.widthAxis = widthAxis;
     }
 
     @Override
     public String toString(){
-        return String.format("Elipse [Centro: %s, RMayor: %.2f , RMenor %.2f]",centerPoint.toString(),sMayorAxis,sMinorAxis);
+        return String.format("Elipse [Centro: %s, RAltura: %.2f , RAncho %.2f]",centerPoint.toString(),heightAxis,widthAxis);
     }
 
     public Point getCenterPoint() {
         return centerPoint;
     }
 
-    public double getMayorAxis() {
-        return sMayorAxis;
+    public double getHeightAxis() {
+        return heightAxis;
     }
 
-    public double getMinorAxis() {
-        return sMinorAxis;
+    public double getWidthAxis() {
+        return widthAxis;
     }
 
     @Override
@@ -37,19 +39,22 @@ public class Elipse extends Figure{
         if(!(o instanceof Elipse))
             return false;
         Elipse that = (Elipse) o;
-        return centerPoint.equals(that.getCenterPoint()) && Double.compare(sMayorAxis, that.getMayorAxis()) == 0
-                && Double.compare(sMinorAxis, that.getMinorAxis())==0;
+        return centerPoint.equals(that.getCenterPoint()) && Double.compare(heightAxis, that.getHeightAxis()) == 0
+                && Double.compare(widthAxis, that.getWidthAxis())==0;
     }
 
     @Override
     public boolean pointBelongs(Point p){
-        return Math.pow(centerPoint.getX() - p.getX(),2)/(sMayorAxis*sMayorAxis) + Math.pow(centerPoint.getY() - p.getY(),2)/(sMinorAxis*sMinorAxis) <= 1;
+        double mayorAxis = Math.max(widthAxis, heightAxis);
+        double minorAxis = Math.min(widthAxis,heightAxis);
+        return Math.pow(centerPoint.getX() - p.getX(),2)/(mayorAxis*mayorAxis) + Math.pow(centerPoint.getY() - p.getY(),2)/(minorAxis*minorAxis) <= 1;
     }//Como saber si un punto esta dentro de una elipse:https://www.i-ciencias.com/pregunta/4300/comprueba-si-un-punto-esta-dentro-de-una-elipse
 
 
     @Override
     public void redraw (GraphicsContext gc){
-
+        gc.fillOval(topLeft.getX(), topLeft.getY(),widthAxis*2 ,heightAxis *2);
+        gc.strokeOval(topLeft.getX(), topLeft.getY(), widthAxis*2, heightAxis*2);
     }
 
 
