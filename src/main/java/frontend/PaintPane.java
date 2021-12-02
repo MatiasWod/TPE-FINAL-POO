@@ -94,7 +94,7 @@ public class PaintPane extends BorderPane {
 				return;
 			}
 			Figure newFigure = null;
-			if (rectangleButton.isSelected()) {
+			if (rectangleButton.isSelected()) {//Agregar if para elipse,square,linea
 				newFigure = new Rectangle(startPoint, endPoint, bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
 			} else if (circleButton.isSelected()) {
 				double circleRadius = Math.sqrt( Math.pow(endPoint.getX() - startPoint.getX(),2) + Math.pow(endPoint.getY() - startPoint.getY(),2) );
@@ -147,7 +147,7 @@ public class PaintPane extends BorderPane {
 			}
 		});
 		canvas.setOnMouseClicked(event -> {
-			selectedFigure.clear();
+			selectedFigure.clear(); //ESTO ROMPE TODO CADA VE QUE CLICKEAS
 			if (selectionButton.isSelected()) {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				boolean found = false;
@@ -162,7 +162,7 @@ public class PaintPane extends BorderPane {
 				if (found) {
 					statusPane.updateStatus(label.toString());
 				} else {
-					selectedFigure=null;
+					selectedFigure.clear();
 					statusPane.updateStatus("Ninguna figura encontrada");
 				}
 				redrawCanvas();
@@ -173,10 +173,8 @@ public class PaintPane extends BorderPane {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
 				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
-				if(!selectedFigure.isEmpty()){
-					for ( Figure figure : selectedFigure ){
-						figure.move(diffX, diffY);
-					}
+				for ( Figure figure : selectedFigure ){
+					figure.move(diffX, diffY);
 				}
 				redrawCanvas();
 			}
@@ -184,26 +182,33 @@ public class PaintPane extends BorderPane {
 		bordeColor.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
-				if(hasSelected()){
-					refreshFigureColors();
+				if(!selectedFigure.isEmpty()){
+					for(Figure figure : selectedFigure ) {
+						refreshFigureColors();
+					}
 				}
 			}
 		});
 		rellenoColor.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
-				if(hasSelected()){
-					refreshFigureColors();
+				if(!selectedFigure.isEmpty()){
+					for(Figure figure : selectedFigure ) {
+						refreshFigureColors();
+					}
 				}
 			}
 		});
+
+
+
 		bordeSlider.setOnMouseReleased( event -> {
 			refreshFigureColors();
 		});
 		fondoButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
-				if(hasSelected()){
+				if( ! selectedFigure.isEmpty()){
 					for(Figure figure: selectedFigure) {
 						canvasState.toBack(figure);
 					}
@@ -214,7 +219,7 @@ public class PaintPane extends BorderPane {
 		frenteButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
-				if(hasSelected()){
+				if(!selectedFigure.isEmpty()){
 					for(Figure figure: selectedFigure) {
 						canvasState.toFront(figure);
 					}
@@ -227,19 +232,21 @@ public class PaintPane extends BorderPane {
 	}
 
 	private void refreshFigureColors(){
-		for( Figure figure : selectedFigure ){
-			figure.setBordeColor(bordeColor.getValue());
-			figure.setBordeAncho(bordeSlider.getValue());
-			figure.setFigureColor(rellenoColor.getValue());
+		if(!selectedFigure.isEmpty()) {
+			for (Figure figure : selectedFigure) {
+				figure.setBordeColor(bordeColor.getValue());
+				figure.setBordeAncho(bordeSlider.getValue());
+				figure.setFigureColor(rellenoColor.getValue());
+			}
+			redrawCanvas();
 		}
-		redrawCanvas();
 	}
 
 	private void redrawCanvas() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		for(Figure figure : canvasState.figures()) {
 			gc.setLineWidth(figure.getBordeAncho());
-			if(figure.equals(selectedFigure)) {
+			if(selectedFigure.contains(figure)) {
 				gc.setStroke(Color.RED);
 			} else {
 				gc.setStroke(figure.getBordeColor());
@@ -263,9 +270,4 @@ public class PaintPane extends BorderPane {
 		}
 		return found;*/
 	}
-
-	private boolean hasSelected(){
-		return selectedFigure != null;
-	}
-
 }
