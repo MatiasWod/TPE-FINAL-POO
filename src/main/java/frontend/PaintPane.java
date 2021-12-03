@@ -54,8 +54,6 @@ public class PaintPane extends BorderPane {
 	// StatusBar
 	private StatusPane statusPane;
 
-	boolean pressed=false;
-
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 
 		this.canvasState = canvasState;
@@ -89,8 +87,6 @@ public class PaintPane extends BorderPane {
 
 		canvas.setOnMousePressed(event -> {
 			startPoint = new Point(event.getX(), event.getY());
-			pressed=true;
-			System.out.printf("1%s\n",pressed);
 		});
 		canvas.setOnMouseReleased(event -> {
 			boolean flag = true;
@@ -142,20 +138,21 @@ public class PaintPane extends BorderPane {
 
 		canvas.setOnMouseClicked(event -> {
 			Point eventPoint = new Point(event.getX(), event.getY());
-			System.out.printf("2%s\n",pressed);
+			boolean pressed=true;
 			if(selectionButton.isSelected()) {
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
 				boolean found = false;
-				if (pressed) {
-					Rectangle rectSelection = new Rectangle(startPoint, eventPoint, Color.BLACK, 0, Color.BLACK);
-					for (Figure figure : canvasState.figures()) {
-						if (figure.contained(rectSelection)) {
-							selectedFigure.add(figure);
-							label.append(" , ").append(figure.toString());
-							found=true;
-						}
+
+				Rectangle rectSelection = new Rectangle(startPoint, eventPoint, Color.BLACK, 0, Color.BLACK);
+				for (Figure figure : canvasState.figures()) {
+					if (figure.contained(rectSelection)) {
+						selectedFigure.add(figure);
+						label.append(" , ").append(figure.toString());
+						found=true;
+						pressed=false;
 					}
-				}else {
+				}
+				if(pressed){
 					for (Figure figure : canvasState.figures()) {
 						if (figureBelongs(figure, eventPoint)) {
 							found = true;
@@ -174,8 +171,6 @@ public class PaintPane extends BorderPane {
 				redrawCanvas();
 
 			}
-			pressed=false;
-			System.out.printf("3%s\n",pressed);
 		});
 		canvas.setOnMouseDragged(event -> {
 			if (selectionButton.isSelected()) {
