@@ -146,13 +146,11 @@ public class PaintPane extends BorderPane {
 				boolean found = false;
 				if (pressed) {
 					Rectangle rectSelection = new Rectangle(startPoint, eventPoint, Color.BLACK, 0, Color.BLACK);
-					System.out.printf("pressed");
 					for (Figure figure : canvasState.figures()) {
 						if (figure.contained(rectSelection)) {
 							selectedFigure.add(figure);
 							label.append(" , ").append(figure.toString());
 							found=true;
-							System.out.printf("pspamos\n");
 						}
 					}
 				}else {
