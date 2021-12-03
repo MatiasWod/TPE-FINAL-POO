@@ -52,27 +52,18 @@ public class Line extends Figure{
     }
 
     @Override
-    public Color getBordeColor() {
-        return this.bordeColor;
-    }
-    @Override
-    public void setBordeColor(Color bordeColor) {
-        this.bordeColor = bordeColor;
-    }
-    @Override
     public double getBordeAncho() {
         return 0.0D;
     }
     @Override
-    public void setBordeAncho(double anchoColor) {
-    }
+    public void setBordeAncho(double anchoColor) {}
     @Override
     public Color getFigureColor() {
         return Color.WHITE;
     }
     @Override
-    public void setFigureColor(Color figureColor) {
-    }
+    public void setFigureColor(Color figureColor) {}
+
     @Override
     public boolean contained(Rectangle r){
         return r.pointBelongs(startPoint) && r.pointBelongs(endPoint);

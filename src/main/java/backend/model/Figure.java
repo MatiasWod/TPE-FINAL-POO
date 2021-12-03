@@ -3,14 +3,11 @@ package backend.model;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public abstract class Figure {
+public abstract class Figure implements Colorable {
 
-     public abstract Color getBordeColor();
-     public abstract void setBordeColor(Color bordeColor);
-     public abstract double getBordeAncho();
-     public abstract void setBordeAncho(double anchoColor);
-     public abstract Color getFigureColor();
-     public abstract void setFigureColor(Color figureColor);
+     protected Color bordeColor;
+     protected double bordeAncho;
+     protected Color figureColor;
 
      public abstract boolean pointBelongs(Point p);
 
@@ -23,4 +20,30 @@ public abstract class Figure {
      public abstract String toString();
 
      public abstract boolean contained(Rectangle r);
+
+
+     @Override
+     public Color getBordeColor() {
+          return bordeColor;
+     }
+     @Override
+     public void setBordeColor(Color bordeColor) {
+          this.bordeColor = bordeColor;
+     }
+     @Override
+     public double getBordeAncho() {
+          return bordeAncho;
+     }
+     @Override
+     public void setBordeAncho(double anchoColor) {
+          this.bordeAncho = anchoColor;
+     }
+     @Override
+     public Color getFigureColor() {
+          return figureColor;
+     }
+     @Override
+     public void setFigureColor(Color figureColor) {
+          this.figureColor = figureColor;
+     }
 }
