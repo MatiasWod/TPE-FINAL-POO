@@ -38,7 +38,7 @@ public class PaintPane extends BorderPane {
 	private Button fondoButton = new Button("Al Fondo");
 	private Button frenteButton = new Button("Al Frente");
 
-
+	private Text Borde = new Text("Borde:");
 
 	private Slider bordeSlider = new Slider(0, 50, 1);
 	private ColorPicker bordeColor = new ColorPicker(Color.BLACK);
@@ -90,6 +90,7 @@ public class PaintPane extends BorderPane {
 		canvas.setOnMousePressed(event -> {
 			startPoint = new Point(event.getX(), event.getY());
 			pressed=true;
+			System.out.printf("1%s\n",pressed);
 		});
 		canvas.setOnMouseReleased(event -> {
 			boolean flag = true;
@@ -141,6 +142,7 @@ public class PaintPane extends BorderPane {
 
 		canvas.setOnMouseClicked(event -> {
 			Point eventPoint = new Point(event.getX(), event.getY());
+			System.out.printf("2%s\n",pressed);
 			if(selectionButton.isSelected()) {
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
 				boolean found = false;
@@ -173,6 +175,7 @@ public class PaintPane extends BorderPane {
 
 			}
 			pressed=false;
+			System.out.printf("3%s\n",pressed);
 		});
 		canvas.setOnMouseDragged(event -> {
 			if (selectionButton.isSelected()) {
