@@ -141,33 +141,28 @@ public class PaintPane extends BorderPane {
 
 		canvas.setOnMouseClicked(event -> {
 			Point eventPoint = new Point(event.getX(), event.getY());
-			if(selectionButton.isSelected() && pressed) {
-				Rectangle rectSelection = new Rectangle(startPoint, eventPoint, Color.BLACK, 0, Color.BLACK);
-				StringBuilder label = new StringBuilder("Se seleccionaron: ");
-				boolean selFlag = false;
-				for (Figure figure : canvasState.figures()) {
-					if (figure.contained(rectSelection)) {
-						selectedFigure.add(figure);
-						label.append(" , ").append(figure.toString());
-						selFlag = true;
-					}
-				}
-				if (selFlag) {
-					statusPane.updateStatus(label.toString());
-				} else {
-					pressed=false;
-					statusPane.updateStatus("Ninguna figura encontrada");
-				}
-			}
-			if (selectionButton.isSelected() && !pressed) {
-				boolean found = false;
+			if(selectionButton.isSelected()) {
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
-				for (Figure figure : canvasState.figures()) {
-					if (figureBelongs(figure, eventPoint)) {
-						found = true;
-						clearSelected();
-						selectedFigure.add(figure);
-						label.append(figure.toString());
+				boolean found = false;
+				if (pressed) {
+					Rectangle rectSelection = new Rectangle(startPoint, eventPoint, Color.BLACK, 0, Color.BLACK);
+					System.out.printf("pressed");
+					for (Figure figure : canvasState.figures()) {
+						if (figure.contained(rectSelection)) {
+							selectedFigure.add(figure);
+							label.append(" , ").append(figure.toString());
+							found=true;
+							System.out.printf("pspamos\n");
+						}
+					}
+				}else {
+					for (Figure figure : canvasState.figures()) {
+						if (figureBelongs(figure, eventPoint)) {
+							found = true;
+							clearSelected();
+							selectedFigure.add(figure);
+							label.append(figure.toString());
+						}
 					}
 				}
 				if (found) {
@@ -177,7 +172,9 @@ public class PaintPane extends BorderPane {
 					statusPane.updateStatus("Ninguna figura encontrada");
 				}
 				redrawCanvas();
+
 			}
+			pressed=false;
 		});
 		canvas.setOnMouseDragged(event -> {
 			if (selectionButton.isSelected()) {
