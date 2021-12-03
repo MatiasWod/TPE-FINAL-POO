@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
@@ -38,7 +39,8 @@ public class PaintPane extends BorderPane {
 	private Button fondoButton = new Button("Al Fondo");
 	private Button frenteButton = new Button("Al Frente");
 
-	private Text Borde = new Text("Borde:");
+	private Text bordeText = new Text("Borde:");
+	private Text rellenoText = new Text("Relleno:");
 
 	private Slider bordeSlider = new Slider(0, 50, 1);
 	private ColorPicker bordeColor = new ColorPicker(Color.BLACK);
@@ -61,6 +63,8 @@ public class PaintPane extends BorderPane {
 		ToggleButton[] toggleArr = {selectionButton, rectangleButton, circleButton, elipseButton, squareButton, lineButton};
 		Control[] toolsArr = {selectionButton, rectangleButton, circleButton, elipseButton, squareButton, lineButton, removeButton, fondoButton,
 				frenteButton, bordeColor, bordeSlider, rellenoColor};
+		Node[] nodesArr = {selectionButton, rectangleButton, circleButton, elipseButton, squareButton, lineButton, removeButton, fondoButton,
+				frenteButton, bordeText, bordeColor, bordeSlider, rellenoText, rellenoColor};
 		ToggleGroup tools = new ToggleGroup();
 		for (Control tool : toolsArr) {
 			tool.setMinWidth(90);
@@ -71,7 +75,7 @@ public class PaintPane extends BorderPane {
 		}
 
 		VBox buttonsBox = new VBox(10);
-		buttonsBox.getChildren().addAll(toolsArr);
+		buttonsBox.getChildren().addAll(nodesArr);
 		buttonsBox.setPadding(new Insets(5));
 		buttonsBox.setStyle("-fx-background-color: #999");
 		buttonsBox.setPrefWidth(100);
