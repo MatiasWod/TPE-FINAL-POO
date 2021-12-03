@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
@@ -38,7 +39,8 @@ public class PaintPane extends BorderPane {
 	private Button fondoButton = new Button("Al Fondo");
 	private Button frenteButton = new Button("Al Frente");
 
-	private Text Borde = new Text("Borde:");
+	private Text bordeText = new Text("Borde:");
+	private Text rellenoText = new Text("Relleno:");
 
 	private Slider bordeSlider = new Slider(0, 50, 1);
 	private ColorPicker bordeColor = new ColorPicker(Color.BLACK);
@@ -61,6 +63,8 @@ public class PaintPane extends BorderPane {
 		ToggleButton[] toggleArr = {selectionButton, rectangleButton, circleButton, elipseButton, squareButton, lineButton};
 		Control[] toolsArr = {selectionButton, rectangleButton, circleButton, elipseButton, squareButton, lineButton, removeButton, fondoButton,
 				frenteButton, bordeColor, bordeSlider, rellenoColor};
+		Node[] nodesArr = {selectionButton, rectangleButton, circleButton, elipseButton, squareButton, lineButton, removeButton, fondoButton,
+				frenteButton, bordeText, bordeColor, bordeSlider, rellenoText, rellenoColor};
 		ToggleGroup tools = new ToggleGroup();
 		for (Control tool : toolsArr) {
 			tool.setMinWidth(90);
@@ -71,7 +75,7 @@ public class PaintPane extends BorderPane {
 		}
 
 		VBox buttonsBox = new VBox(10);
-		buttonsBox.getChildren().addAll(toolsArr);
+		buttonsBox.getChildren().addAll(nodesArr);
 		buttonsBox.setPadding(new Insets(5));
 		buttonsBox.setStyle("-fx-background-color: #999");
 		buttonsBox.setPrefWidth(100);
@@ -124,7 +128,7 @@ public class PaintPane extends BorderPane {
 			boolean found = false;
 			StringBuilder label = new StringBuilder();
 			for (Figure figure : canvasState.figures()) {
-				if (figureBelongs(figure, eventPoint)) {
+				if (figure.pointBelongs(eventPoint)) {
 					found = true;
 					label.append(figure.toString());
 				}
@@ -154,9 +158,9 @@ public class PaintPane extends BorderPane {
 				}
 				if(pressed){
 					for (Figure figure : canvasState.figures()) {
-						if (figureBelongs(figure, eventPoint)) {
+						if (figure.pointBelongs(eventPoint)) {
 							found = true;
-							clearSelected();
+							selectedFigure.clear();
 							selectedFigure.add(figure);
 							label.append(figure.toString());
 						}
@@ -165,7 +169,7 @@ public class PaintPane extends BorderPane {
 				if (found) {
 					statusPane.updateStatus(label.toString());
 				} else {
-					clearSelected();
+					selectedFigure.clear();
 					statusPane.updateStatus("Ninguna figura encontrada");
 				}
 				redrawCanvas();
@@ -277,22 +281,4 @@ public class PaintPane extends BorderPane {
 		}
 	}
 
-	private void clearSelected(){
-		selectedFigure.clear();
-	}
-
-	private boolean figureBelongs(Figure figure, Point eventPoint) {
-		return figure.pointBelongs(eventPoint);
-		/*boolean found = false;
-		if(figure instanceof Rectangle) {
-			Rectangle rectangle = (Rectangle) figure;
-			found = eventPoint.getX() > rectangle.getTopLeft().getX() && eventPoint.getX() < rectangle.getBottomRight().getX() &&
-					eventPoint.getY() > rectangle.getTopLeft().getY() && eventPoint.getY() < rectangle.getBottomRight().getY();
-		} else if(figure instanceof Circle) {
-			Circle circle = (Circle) figure;
-			found = Math.sqrt(Math.pow(circle.getCenterPoint().getX() - eventPoint.getX(), 2) +
-					Math.pow(circle.getCenterPoint().getY() - eventPoint.getY(), 2)) < circle.getRadius();
-		}
-		return found;*/
-	}
 }
