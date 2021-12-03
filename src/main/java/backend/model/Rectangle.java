@@ -10,9 +10,9 @@ public class Rectangle extends Figure {
     public Rectangle(Point topLeft, Point bottomRight , Color bordeColor, double bordeAncho, Color figureColor) {
         this.topLeft = topLeft;
         this.bottomRight = bottomRight;
-        this.bordeColor=bordeColor;
-        this.bordeAncho = bordeAncho;
-        this.figureColor = figureColor;
+        setBordeAncho(bordeAncho);
+        setBordeColor(bordeColor);
+        setFigureColor(figureColor);
     }
 
     public Point getTopLeft() {
