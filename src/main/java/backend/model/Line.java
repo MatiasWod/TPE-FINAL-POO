@@ -9,7 +9,7 @@ public class Line extends Figure{
     public Line(Point startPoint, Point endPoint, Color bordeColor){
         this.startPoint=startPoint;
         this.endPoint=endPoint;
-        this.bordeColor = bordeColor;
+        setBordeColor(bordeColor);
     }
 
     public Point getStartPoint(){return startPoint;}

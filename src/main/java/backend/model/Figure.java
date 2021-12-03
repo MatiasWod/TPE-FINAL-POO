@@ -5,9 +5,9 @@ import javafx.scene.paint.Color;
 
 public abstract class Figure implements Colorable {
 
-     protected Color bordeColor;
-     protected double bordeAncho;
-     protected Color figureColor;
+     private Color bordeColor;
+     private double bordeAncho;
+     private Color figureColor;
 
      public abstract boolean pointBelongs(Point p);
 
