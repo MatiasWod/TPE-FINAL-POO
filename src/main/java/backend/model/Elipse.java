@@ -17,7 +17,6 @@ public class Elipse extends Figure{
         this.topLeft = tL;
         this.heightAxis = heightAxis;
         this.widthAxis = widthAxis;
-        System.out.printf("%s",this);
         this.bordeColor=bordeColor;
         this.bordeAncho = bordeAncho;
         this.figureColor = figureColor;
