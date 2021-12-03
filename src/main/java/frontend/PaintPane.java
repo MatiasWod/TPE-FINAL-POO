@@ -159,7 +159,6 @@ public class PaintPane extends BorderPane {
 				for (Figure figure : canvasState.figures()) {
 					if (figureBelongs(figure, eventPoint)) {//Creo que habria que usar el pointBelongs aca (adecuado para poo)
 						found = true;
-						clearSelected();
 						selectedFigure.add(figure);
 						label.append(figure.toString());
 					}
