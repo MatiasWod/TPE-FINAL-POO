@@ -38,7 +38,7 @@ public class PaintPane extends BorderPane {
 	private Button fondoButton = new Button("Al Fondo");
 	private Button frenteButton = new Button("Al Frente");
 
-
+	private Text Borde = new Text("Borde:");
 
 	private Slider bordeSlider = new Slider(0, 50, 1);
 	private ColorPicker bordeColor = new ColorPicker(Color.BLACK);
@@ -53,8 +53,6 @@ public class PaintPane extends BorderPane {
 
 	// StatusBar
 	private StatusPane statusPane;
-
-	boolean pressed=false;
 
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 
@@ -89,7 +87,6 @@ public class PaintPane extends BorderPane {
 
 		canvas.setOnMousePressed(event -> {
 			startPoint = new Point(event.getX(), event.getY());
-			pressed=true;
 		});
 		canvas.setOnMouseReleased(event -> {
 			boolean flag = true;
@@ -141,19 +138,21 @@ public class PaintPane extends BorderPane {
 
 		canvas.setOnMouseClicked(event -> {
 			Point eventPoint = new Point(event.getX(), event.getY());
+			boolean pressed=true;
 			if(selectionButton.isSelected()) {
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
 				boolean found = false;
-				if (pressed) {
-					Rectangle rectSelection = new Rectangle(startPoint, eventPoint, Color.BLACK, 0, Color.BLACK);
-					for (Figure figure : canvasState.figures()) {
-						if (figure.contained(rectSelection)) {
-							selectedFigure.add(figure);
-							label.append(" , ").append(figure.toString());
-							found=true;
-						}
+
+				Rectangle rectSelection = new Rectangle(startPoint, eventPoint, Color.BLACK, 0, Color.BLACK);
+				for (Figure figure : canvasState.figures()) {
+					if (figure.contained(rectSelection)) {
+						selectedFigure.add(figure);
+						label.append(" , ").append(figure.toString());
+						found=true;
+						pressed=false;
 					}
-				}else {
+				}
+				if(pressed){
 					for (Figure figure : canvasState.figures()) {
 						if (figureBelongs(figure, eventPoint)) {
 							found = true;
@@ -172,7 +171,6 @@ public class PaintPane extends BorderPane {
 				redrawCanvas();
 
 			}
-			pressed=false;
 		});
 		canvas.setOnMouseDragged(event -> {
 			if (selectionButton.isSelected()) {
