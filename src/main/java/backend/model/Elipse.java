@@ -8,9 +8,6 @@ public class Elipse extends Figure{
     private Point topLeft;
     private double heightAxis;
     private double widthAxis;
-    private Color bordeColor;
-    private double bordeAncho;
-    private Color figureColor;
 
     public Elipse(Point tL, double heightAxis, double widthAxis, Color bordeColor, double bordeAncho, Color figureColor){
         this.centerPoint = new Point(tL.getX() + widthAxis,Math.abs(tL.getY() + heightAxis));
@@ -55,13 +52,11 @@ public class Elipse extends Figure{
         return ( (Math.pow(p.getX()-centerPoint.getX(),2) / Math.pow(widthAxis,2)) + ( Math.pow(p.getY()-centerPoint.getY(),2) / Math.pow(heightAxis,2)) <= 1 );
     }//Como saber si un punto esta dentro de una elipse:https://www.i-ciencias.com/pregunta/4300/comprueba-si-un-punto-esta-dentro-de-una-elipse
 
-
     @Override
     public void redraw (GraphicsContext gc){
         gc.fillOval(topLeft.getX(), topLeft.getY(),widthAxis*2 ,heightAxis*2 );
         gc.strokeOval(topLeft.getX(), topLeft.getY(), widthAxis*2, heightAxis*2);
     }
-
 
     @Override
     public void move( double diffX , double diffY ){
@@ -70,6 +65,7 @@ public class Elipse extends Figure{
         topLeft.x+=diffX;
         topLeft.y+=diffY;
     }
+
     @Override
     public boolean contained(Rectangle r){
         return r.pointBelongs(new Point(centerPoint.getX() - widthAxis,centerPoint.getY()))
@@ -77,30 +73,4 @@ public class Elipse extends Figure{
                 && r.pointBelongs(new Point(centerPoint.getX(),centerPoint.getY() + heightAxis))
                 && r.pointBelongs(new Point(centerPoint.getX(),centerPoint.getY() - heightAxis));
     }
-
-    @Override
-    public Color getBordeColor() {
-        return bordeColor;
-    }
-    @Override
-    public void setBordeColor(Color bordeColor) {
-        this.bordeColor = bordeColor;
-    }
-    @Override
-    public double getBordeAncho() {
-        return bordeAncho;
-    }
-    @Override
-    public void setBordeAncho(double anchoColor) {
-        this.bordeAncho = anchoColor;
-    }
-    @Override
-    public Color getFigureColor() {
-        return figureColor;
-    }
-    @Override
-    public void setFigureColor(Color figureColor) {
-        this.figureColor = figureColor;
-    }
-
 }
