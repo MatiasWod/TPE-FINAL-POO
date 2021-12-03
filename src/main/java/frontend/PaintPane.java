@@ -34,8 +34,10 @@ public class PaintPane extends BorderPane {
 	private ToggleButton squareButton = new ToggleButton("Cuadrado");
 	private ToggleButton lineButton = new ToggleButton("Linea");
 
+	private Button removeButton = new Button("Borrar");
 	private Button fondoButton = new Button("Al Fondo");
 	private Button frenteButton = new Button("Al Frente");
+
 
 
 	private Slider bordeSlider = new Slider(0, 50, 1);
@@ -55,9 +57,9 @@ public class PaintPane extends BorderPane {
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
-		ToggleButton[] toggleArr = {selectionButton, rectangleButton, circleButton,elipseButton,squareButton,lineButton};
-		Control[] toolsArr = {selectionButton, rectangleButton, circleButton,elipseButton,squareButton,lineButton,fondoButton,
-				frenteButton,bordeColor,bordeSlider,rellenoColor};
+		ToggleButton[] toggleArr = {selectionButton, rectangleButton, circleButton, elipseButton, squareButton, lineButton};
+		Control[] toolsArr = {selectionButton, rectangleButton, circleButton, elipseButton, squareButton, lineButton, removeButton, fondoButton,
+				frenteButton, bordeColor, bordeSlider, rellenoColor};
 		ToggleGroup tools = new ToggleGroup();
 		for (Control tool : toolsArr) {
 			tool.setMinWidth(90);
@@ -85,33 +87,33 @@ public class PaintPane extends BorderPane {
 			startPoint = new Point(event.getX(), event.getY());
 		});
 		canvas.setOnMouseReleased(event -> {
-			boolean flag=true;
+			boolean flag = true;
 			Point endPoint = new Point(event.getX(), event.getY());
 			if (startPoint == null) {
 				return;
 			}
-			if ( ( endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY() ) && !(lineButton.isSelected()) ) {
+			if ((endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY()) && !(lineButton.isSelected())) {
 				return;
 			}
 			Figure newFigure = null;
 			if (rectangleButton.isSelected()) {
 				newFigure = new Rectangle(startPoint, endPoint, bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
 			} else if (circleButton.isSelected()) {
-				double circleRadius = Math.sqrt( Math.pow(endPoint.getX() - startPoint.getX(),2) + Math.pow(endPoint.getY() - startPoint.getY(),2) );
-				newFigure = new Circle(startPoint, circleRadius,bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
-			} else if (elipseButton.isSelected()){
-				newFigure = new Elipse(startPoint,Math.abs(startPoint.getY() - endPoint.getY())/2,Math.abs(endPoint.getX() - startPoint.getX())/2,bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
-			}else if(squareButton.isSelected()){
-				newFigure = new Square(startPoint,new Point(endPoint.getX(), (startPoint.getY()+endPoint.getX()-startPoint.getX())),bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
-			} else if(lineButton.isSelected()) {
-				newFigure = new Line(startPoint,endPoint, bordeColor.getValue());
-			} else if(selectionButton.isSelected()){
+				double circleRadius = Math.sqrt(Math.pow(endPoint.getX() - startPoint.getX(), 2) + Math.pow(endPoint.getY() - startPoint.getY(), 2));
+				newFigure = new Circle(startPoint, circleRadius, bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
+			} else if (elipseButton.isSelected()) {
+				newFigure = new Elipse(startPoint, Math.abs(startPoint.getY() - endPoint.getY()) / 2, Math.abs(endPoint.getX() - startPoint.getX()) / 2, bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
+			} else if (squareButton.isSelected()) {
+				newFigure = new Square(startPoint, new Point(endPoint.getX(), (startPoint.getY() + endPoint.getX() - startPoint.getX())), bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
+			} else if (lineButton.isSelected()) {
+				newFigure = new Line(startPoint, endPoint, bordeColor.getValue());
+			} else if (selectionButton.isSelected()) {
 				clearSelected();
 				Rectangle rectSelection = new Rectangle(startPoint, endPoint, Color.BLACK, 0, Color.BLACK);
 				StringBuilder label = new StringBuilder("Se seleccionaron: ");
 				boolean selFlag = false;
 				for(Figure figure :canvasState.figures()){
-					if(figure.contained(rectSelection)){
+					if( figure.contained(rectSelection)){
 						selectedFigure.add(figure);
 						label.append(" , ").append(figure.toString());
 						selFlag=true;
@@ -119,12 +121,13 @@ public class PaintPane extends BorderPane {
 				}
 				if(selFlag){
 					statusPane.updateStatus(label.toString());
-				} else{
-					clearSelected();
+				} else {
 					statusPane.updateStatus("Ninguna figura encontrada");
 				}
-				flag=false;
-			}else{return;}
+				flag = false;
+			} else {
+				return;
+			}
 			if (flag) {
 				canvasState.addFigure(newFigure);
 			}
@@ -156,6 +159,7 @@ public class PaintPane extends BorderPane {
 				for (Figure figure : canvasState.figures()) {
 					if (figureBelongs(figure, eventPoint)) {//Creo que habria que usar el pointBelongs aca (adecuado para poo)
 						found = true;
+						clearSelected();
 						selectedFigure.add(figure);
 						label.append(figure.toString());
 					}
@@ -180,11 +184,28 @@ public class PaintPane extends BorderPane {
 				redrawCanvas();
 			}
 		});
+		if (!selectedFigure.isEmpty()) {
+			for (Figure figure : selectedFigure) {
+				canvasState.remove(figure);
+			}
+		}
+		removeButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent actionEvent) {
+				if (!selectedFigure.isEmpty()) {
+					for (Figure figure : selectedFigure) {
+						canvasState.remove(figure);
+					}
+				}
+				redrawCanvas();
+			}
+		});
+
 		bordeColor.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
-				if(!selectedFigure.isEmpty()){
-					for(Figure figure : selectedFigure ) {
+				if (!selectedFigure.isEmpty()) {
+					for (Figure figure : selectedFigure) {
 						refreshFigureColors();
 					}
 				}
@@ -193,8 +214,8 @@ public class PaintPane extends BorderPane {
 		rellenoColor.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
-				if(!selectedFigure.isEmpty()){
-					for(Figure figure : selectedFigure ) {
+				if (!selectedFigure.isEmpty()) {
+					for (Figure figure : selectedFigure) {
 						refreshFigureColors();
 					}
 				}
@@ -206,6 +227,7 @@ public class PaintPane extends BorderPane {
 		bordeSlider.setOnMouseReleased( event -> {
 			refreshFigureColors();
 		});
+
 		fondoButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
@@ -258,8 +280,9 @@ public class PaintPane extends BorderPane {
 	}
 
 	private void clearSelected(){
-		for(Figure figure : selectedFigure )
+		for(Figure figure : selectedFigure ){
 			selectedFigure.remove(figure);
+		}
 	}
 
 	private boolean figureBelongs(Figure figure, Point eventPoint) {
