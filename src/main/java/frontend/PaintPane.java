@@ -155,6 +155,7 @@ public class PaintPane extends BorderPane {
 				if (selFlag) {
 					statusPane.updateStatus(label.toString());
 				} else {
+					pressed=false;
 					statusPane.updateStatus("Ninguna figura encontrada");
 				}
 			}
