@@ -94,7 +94,7 @@ public class PaintPane extends BorderPane {
 				return;
 			}
 			Figure newFigure = null;
-			if (rectangleButton.isSelected()) {//Agregar if para elipse,square,linea
+			if (rectangleButton.isSelected()) {
 				newFigure = new Rectangle(startPoint, endPoint, bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
 			} else if (circleButton.isSelected()) {
 				double circleRadius = Math.sqrt( Math.pow(endPoint.getX() - startPoint.getX(),2) + Math.pow(endPoint.getY() - startPoint.getY(),2) );
@@ -106,6 +106,7 @@ public class PaintPane extends BorderPane {
 			} else if(lineButton.isSelected()) {
 				newFigure = new Line(startPoint,endPoint, bordeColor.getValue());
 			} else if(selectionButton.isSelected()){
+				clearSelected();
 				Rectangle rectSelection = new Rectangle(startPoint, endPoint, Color.BLACK, 0, Color.BLACK);
 				StringBuilder label = new StringBuilder("Se seleccionaron: ");
 				boolean selFlag = false;
@@ -153,7 +154,7 @@ public class PaintPane extends BorderPane {
 				boolean found = false;
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
 				for (Figure figure : canvasState.figures()) {
-					if (figureBelongs(figure, eventPoint)) {
+					if (figureBelongs(figure, eventPoint)) {//Creo que habria que usar el pointBelongs aca (adecuado para poo)
 						found = true;
 						selectedFigure.add(figure);
 						label.append(figure.toString());
@@ -257,9 +258,8 @@ public class PaintPane extends BorderPane {
 	}
 
 	private void clearSelected(){
-		for(Figure figure : selectedFigure ){
+		for(Figure figure : selectedFigure )
 			selectedFigure.remove(figure);
-		}
 	}
 
 	private boolean figureBelongs(Figure figure, Point eventPoint) {
