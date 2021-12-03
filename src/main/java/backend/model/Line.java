@@ -5,7 +5,6 @@ import javafx.scene.paint.Color;
 
 public class Line extends Figure{
     private Point startPoint,endPoint;
-    private Color bordeColor;
 
     public Line(Point startPoint, Point endPoint, Color bordeColor){
         this.startPoint=startPoint;
