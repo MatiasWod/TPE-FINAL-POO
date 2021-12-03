@@ -54,7 +54,10 @@ public class PaintPane extends BorderPane {
 	// StatusBar
 	private StatusPane statusPane;
 
+	boolean pressed=false;
+
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
+
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
 		ToggleButton[] toggleArr = {selectionButton, rectangleButton, circleButton, elipseButton, squareButton, lineButton};
@@ -65,7 +68,7 @@ public class PaintPane extends BorderPane {
 			tool.setMinWidth(90);
 			tool.setCursor(Cursor.HAND);
 		}
-		for(ToggleButton tool : toggleArr){
+		for (ToggleButton tool : toggleArr) {
 			tool.setToggleGroup(tools);
 		}
 
@@ -83,8 +86,10 @@ public class PaintPane extends BorderPane {
 		bordeSlider.setBlockIncrement(10);
 		bordeSlider.setMajorTickUnit(26);
 
+
 		canvas.setOnMousePressed(event -> {
 			startPoint = new Point(event.getX(), event.getY());
+			pressed=true;
 		});
 		canvas.setOnMouseReleased(event -> {
 			boolean flag = true;
@@ -96,7 +101,7 @@ public class PaintPane extends BorderPane {
 				return;
 			}
 			Figure newFigure = null;
-			if (rectangleButton.isSelected()) {
+			if (rectangleButton.isSelected()) {//Agregar if para elipse,square,linea
 				newFigure = new Rectangle(startPoint, endPoint, bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
 			} else if (circleButton.isSelected()) {
 				double circleRadius = Math.sqrt(Math.pow(endPoint.getX() - startPoint.getX(), 2) + Math.pow(endPoint.getY() - startPoint.getY(), 2));
@@ -107,25 +112,7 @@ public class PaintPane extends BorderPane {
 				newFigure = new Square(startPoint, new Point(endPoint.getX(), (startPoint.getY() + endPoint.getX() - startPoint.getX())), bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
 			} else if (lineButton.isSelected()) {
 				newFigure = new Line(startPoint, endPoint, bordeColor.getValue());
-			} else if (selectionButton.isSelected()) {
-				clearSelected();
-				Rectangle rectSelection = new Rectangle(startPoint, endPoint, Color.BLACK, 0, Color.BLACK);
-				StringBuilder label = new StringBuilder("Se seleccionaron: ");
-				boolean selFlag = false;
-				for(Figure figure :canvasState.figures()){
-					if( figure.contained(rectSelection)){
-						selectedFigure.add(figure);
-						label.append(" , ").append(figure.toString());
-						selFlag=true;
-					}
-				}
-				if(selFlag){
-					statusPane.updateStatus(label.toString());
-				} else {
-					statusPane.updateStatus("Ninguna figura encontrada");
-				}
-				flag = false;
-			} else {
+			} else{
 				return;
 			}
 			if (flag) {
@@ -134,6 +121,7 @@ public class PaintPane extends BorderPane {
 			startPoint = null;
 			redrawCanvas();
 		});
+
 		canvas.setOnMouseMoved(event -> {
 			Point eventPoint = new Point(event.getX(), event.getY());
 			boolean found = false;
@@ -150,15 +138,33 @@ public class PaintPane extends BorderPane {
 				statusPane.updateStatus(eventPoint.toString());
 			}
 		});
+
 		canvas.setOnMouseClicked(event -> {
-			clearSelected();
-			if (selectionButton.isSelected()) {
-				Point eventPoint = new Point(event.getX(), event.getY());
+			Point eventPoint = new Point(event.getX(), event.getY());
+			if(selectionButton.isSelected() && pressed) {
+				Rectangle rectSelection = new Rectangle(startPoint, eventPoint, Color.BLACK, 0, Color.BLACK);
+				StringBuilder label = new StringBuilder("Se seleccionaron: ");
+				boolean selFlag = false;
+				for (Figure figure : canvasState.figures()) {
+					if (figure.contained(rectSelection)) {
+						selectedFigure.add(figure);
+						label.append(" , ").append(figure.toString());
+						selFlag = true;
+					}
+				}
+				if (selFlag) {
+					statusPane.updateStatus(label.toString());
+				} else {
+					statusPane.updateStatus("Ninguna figura encontrada");
+				}
+			}
+			if (selectionButton.isSelected() && !pressed) {
 				boolean found = false;
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
 				for (Figure figure : canvasState.figures()) {
-					if (figureBelongs(figure, eventPoint)) {//Creo que habria que usar el pointBelongs aca (adecuado para poo)
+					if (figureBelongs(figure, eventPoint)) {
 						found = true;
+						clearSelected();
 						selectedFigure.add(figure);
 						label.append(figure.toString());
 					}
@@ -177,10 +183,12 @@ public class PaintPane extends BorderPane {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
 				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
-				for ( Figure figure : selectedFigure ){
-					figure.move(diffX, diffY);
+				if (!selectedFigure.isEmpty()) {
+					for (Figure figure : selectedFigure) {
+						figure.move(diffX, diffY);
+					}
+					redrawCanvas();
 				}
-				redrawCanvas();
 			}
 		});
 		if (!selectedFigure.isEmpty()) {
@@ -220,9 +228,6 @@ public class PaintPane extends BorderPane {
 				}
 			}
 		});
-
-
-
 		bordeSlider.setOnMouseReleased( event -> {
 			refreshFigureColors();
 		});
@@ -279,9 +284,7 @@ public class PaintPane extends BorderPane {
 	}
 
 	private void clearSelected(){
-		for(Figure figure : selectedFigure ){
-			selectedFigure.remove(figure);
-		}
+		selectedFigure.clear();
 	}
 
 	private boolean figureBelongs(Figure figure, Point eventPoint) {
