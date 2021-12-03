@@ -21,26 +21,26 @@ import java.util.List;
 public class PaintPane extends BorderPane {
 
 	// BackEnd
-	private CanvasState canvasState;
+	private final CanvasState canvasState;
 
 	// Canvas y relacionados
-	private Canvas canvas = new Canvas(800, 600);
-	private GraphicsContext gc = canvas.getGraphicsContext2D();
+	private final Canvas canvas = new Canvas(800, 600);
+	private final GraphicsContext gc = canvas.getGraphicsContext2D();
 
 	// Botones Barra Izquierda
-	private ToggleButton selectionButton = new ToggleButton("Seleccionar");
-	private ToggleButton rectangleButton = new ToggleButton("Rectángulo");
-	private ToggleButton circleButton = new ToggleButton("Círculo");
-	private ToggleButton elipseButton = new ToggleButton("Elipse");
-	private ToggleButton squareButton = new ToggleButton("Cuadrado");
-	private ToggleButton lineButton = new ToggleButton("Linea");
+	private final ToggleButton selectionButton = new ToggleButton("Seleccionar");
+	private final ToggleButton rectangleButton = new ToggleButton("Rectángulo");
+	private final ToggleButton circleButton = new ToggleButton("Círculo");
+	private final ToggleButton elipseButton = new ToggleButton("Elipse");
+	private final ToggleButton squareButton = new ToggleButton("Cuadrado");
+	private final ToggleButton lineButton = new ToggleButton("Linea");
 
-	private Button removeButton = new Button("Borrar");
-	private Button fondoButton = new Button("Al Fondo");
-	private Button frenteButton = new Button("Al Frente");
+	private final Button removeButton = new Button("Borrar");
+	private final Button fondoButton = new Button("Al Fondo");
+	private final Button frenteButton = new Button("Al Frente");
 
-	private Text bordeText = new Text("Borde:");
-	private Text rellenoText = new Text("Relleno:");
+	private final Text bordeText = new Text("Borde:");
+	private final Text rellenoText = new Text("Relleno:");
 
 	private Slider bordeSlider = new Slider(0, 50, 1);
 	private ColorPicker bordeColor = new ColorPicker(Color.BLACK);
@@ -51,10 +51,10 @@ public class PaintPane extends BorderPane {
 	private Point startPoint;
 
 	// Seleccionar una figura
-	private List<Figure> selectedFigure = new ArrayList<>();
+	private final List<Figure> selectedFigure = new ArrayList<>();
 
 	// StatusBar
-	private StatusPane statusPane;
+	private final StatusPane statusPane;
 
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 
