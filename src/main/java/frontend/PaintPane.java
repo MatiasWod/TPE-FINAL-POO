@@ -93,7 +93,6 @@ public class PaintPane extends BorderPane {
 			startPoint = new Point(event.getX(), event.getY());
 		});
 		canvas.setOnMouseReleased(event -> {
-			boolean flag = true;
 			Point endPoint = new Point(event.getX(), event.getY());
 			if (startPoint == null) {
 				return;
@@ -116,9 +115,7 @@ public class PaintPane extends BorderPane {
 			} else{
 				return;
 			}
-			if (flag) {
-				canvasState.addFigure(newFigure);
-			}
+			canvasState.addFigure(newFigure);
 			startPoint = null;
 			redrawCanvas();
 		});
