@@ -186,11 +186,10 @@ public class PaintPane extends BorderPane {
 				}
 			}
 		});
-		if (!selectedFigure.isEmpty()) {
-			for (Figure figure : selectedFigure) {
-				canvasState.remove(figure);
-			}
+        for (Figure figure : selectedFigure) {
+			canvasState.remove(figure);
 		}
+
 		removeButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
