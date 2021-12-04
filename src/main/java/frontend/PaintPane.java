@@ -41,9 +41,9 @@ public class PaintPane extends BorderPane {
 	private final Text bordeText = new Text("Borde:");
 	private final Text rellenoText = new Text("Relleno:");
 
-	private Slider bordeSlider = new Slider(0, 50, 1);
-	private ColorPicker bordeColor = new ColorPicker(Color.BLACK);
-	private ColorPicker rellenoColor = new ColorPicker(Color.YELLOW);
+	private final Slider bordeSlider = new Slider(0, 50, 1);
+	private final ColorPicker bordeColor = new ColorPicker(Color.BLACK);
+	private final ColorPicker rellenoColor = new ColorPicker(Color.YELLOW);
 
 	//private Text texto = new Text("Borde");		Para agregarlo al coso: buttonsBox.getChildren().add(texto);
 	// Dibujar una figura
@@ -88,9 +88,7 @@ public class PaintPane extends BorderPane {
 		bordeSlider.setMajorTickUnit(26);
 
 
-		canvas.setOnMousePressed(event -> {
-			startPoint = new Point(event.getX(), event.getY());
-		});
+		canvas.setOnMousePressed(event -> startPoint = new Point(event.getX(), event.getY()));
 		canvas.setOnMouseReleased(event -> {
 			Point endPoint = new Point(event.getX(), event.getY());
 			if (startPoint == null) {
@@ -99,7 +97,7 @@ public class PaintPane extends BorderPane {
 			if ((endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY()) && !(lineButton.isSelected())) {
 				return;
 			}
-			Figure newFigure = null;
+			Figure newFigure;
 			if (rectangleButton.isSelected()) {//Agregar if para elipse,square,linea
 				newFigure = new Rectangle(startPoint, endPoint, bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
 			} else if (circleButton.isSelected()) {
@@ -126,7 +124,7 @@ public class PaintPane extends BorderPane {
 			for (Figure figure : canvasState.figures()) {
 				if (figure.pointBelongs(eventPoint)) {
 					found = true;
-					label.append(figure.toString());
+					label.append(figure);
 				}
 			}
 			if (found) {
@@ -147,7 +145,7 @@ public class PaintPane extends BorderPane {
 				for (Figure figure : canvasState.figures()) {
 					if (figure.contained(rectSelection)) {
 						selectedFigure.add(figure);
-						label.append(" , ").append(figure.toString());
+						label.append(" , ").append(figure);
 						found=true;
 						pressed=false;
 					}
@@ -158,7 +156,7 @@ public class PaintPane extends BorderPane {
 							found = true;
 							selectedFigure.clear();
 							selectedFigure.add(figure);
-							label.append(figure.toString());
+							label.append(figure);
 						}
 					}
 				}
