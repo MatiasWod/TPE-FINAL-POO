@@ -34,7 +34,6 @@ public class PaintPane extends BorderPane {
 	private final ToggleButton elipseButton = new ToggleButton("Elipse");
 	private final ToggleButton squareButton = new ToggleButton("Cuadrado");
 	private final ToggleButton lineButton = new ToggleButton("Linea");
-
 	private final Button removeButton = new Button("Borrar");
 	private final Button fondoButton = new Button("Al Fondo");
 	private final Button frenteButton = new Button("Al Frente");
@@ -111,7 +110,7 @@ public class PaintPane extends BorderPane {
 			} else if (squareButton.isSelected()) {
 				newFigure = new Square(startPoint, new Point(endPoint.getX(), (startPoint.getY() + endPoint.getX() - startPoint.getX())), bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
 			} else if (lineButton.isSelected()) {
-				newFigure = new Line(startPoint, endPoint, bordeColor.getValue());
+				newFigure = new Line(startPoint, endPoint, bordeColor.getValue(), bordeSlider.getValue());
 			} else{
 				return;
 			}
@@ -183,9 +182,6 @@ public class PaintPane extends BorderPane {
                 redrawCanvas();
 			}
 		});
-        for (Figure figure : selectedFigure) {
-			canvasState.remove(figure);
-		}
 
 		removeButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override

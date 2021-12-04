@@ -6,10 +6,11 @@ import javafx.scene.paint.Color;
 public class Line extends Figure{
     private Point startPoint,endPoint;
 
-    public Line(Point startPoint, Point endPoint, Color bordeColor){
+    public Line(Point startPoint, Point endPoint, Color bordeColor, double bordeAncho){
         this.startPoint=startPoint;
         this.endPoint=endPoint;
         setBordeColor(bordeColor);
+        setBordeAncho(bordeAncho);
     }
 
     public Point getStartPoint(){return startPoint;}
@@ -50,12 +51,12 @@ public class Line extends Figure{
             endPoint.y += diffY;
     }
 
-    @Override
-    public double getBordeAncho() {
-        return 0.0D;
-    }
-    @Override
-    public void setBordeAncho(double anchoColor) {}
+//    @Override
+//    public double getBordeAncho() {
+//        return 0.0D;
+//    }
+//    @Override
+//    public void setBordeAncho(double anchoColor) {}
     @Override
     public Color getFigureColor() {
         return Color.WHITE;
