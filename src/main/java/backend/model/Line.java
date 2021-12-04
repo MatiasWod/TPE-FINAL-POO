@@ -51,12 +51,7 @@ public class Line extends Figure{
             endPoint.y += diffY;
     }
 
-//    @Override
-//    public double getBordeAncho() {
-//        return 0.0D;
-//    }
-//    @Override
-//    public void setBordeAncho(double anchoColor) {}
+
     @Override
     public Color getFigureColor() {
         return Color.WHITE;
