@@ -50,7 +50,7 @@ public class Elipse extends Figure{
     @Override
     public boolean pointBelongs(Point p){
         return ( (Math.pow(p.getX()-centerPoint.getX(),2) / Math.pow(widthAxis,2)) + ( Math.pow(p.getY()-centerPoint.getY(),2) / Math.pow(heightAxis,2)) <= 1 );
-    }//Como saber si un punto esta dentro de una elipse:https://www.i-ciencias.com/pregunta/4300/comprueba-si-un-punto-esta-dentro-de-una-elipse
+    }
 
     @Override
     public void redraw (GraphicsContext gc){
@@ -60,10 +60,8 @@ public class Elipse extends Figure{
 
     @Override
     public void move( double diffX , double diffY ){
-        centerPoint.x += diffX;
-        centerPoint.y += diffY;
-        topLeft.x+=diffX;
-        topLeft.y+=diffY;
+        centerPoint.move(diffX,diffY);
+        topLeft.move(diffX,diffY);
     }
 
     @Override

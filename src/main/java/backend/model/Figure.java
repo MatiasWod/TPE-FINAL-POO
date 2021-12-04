@@ -3,7 +3,7 @@ package backend.model;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public abstract class Figure implements Colorable {
+public abstract class Figure implements Colorable,Movable {
 
      private Color bordeColor;
      private double bordeAncho;

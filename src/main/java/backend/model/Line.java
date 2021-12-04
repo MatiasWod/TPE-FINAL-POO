@@ -45,10 +45,8 @@ public class Line extends Figure{
 
     @Override
     public void move( double diffX, double diffY){
-            startPoint.x += diffX;
-            startPoint.y += diffY;
-            endPoint.x += diffX;
-            endPoint.y += diffY;
+            startPoint.move(diffX,diffY);
+            endPoint.move(diffX,diffY);
     }
 
 

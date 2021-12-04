@@ -53,10 +53,8 @@ public class Rectangle extends Figure {
 
     @Override
     public void move( double diffX, double diffY){
-        this.getTopLeft().x += diffX;
-        this.getBottomRight().x += diffX;
-        this.getTopLeft().y += diffY;
-        this.getBottomRight().y += diffY;
+        getTopLeft().move(diffX,diffY);
+        getBottomRight().move(diffX,diffY);
     }
 
     public boolean contained(Rectangle r){
