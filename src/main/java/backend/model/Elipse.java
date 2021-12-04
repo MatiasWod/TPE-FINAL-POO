@@ -4,10 +4,10 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class Elipse extends Figure{
-    private Point centerPoint;
-    private Point topLeft;
-    private double heightAxis;
-    private double widthAxis;
+    private final Point centerPoint;
+    private final Point topLeft;
+    private final double heightAxis;
+    private final double widthAxis;
 
     public Elipse(Point tL, double heightAxis, double widthAxis, Color bordeColor, double bordeAncho, Color figureColor){
         this.centerPoint = new Point(tL.getX() + widthAxis,Math.abs(tL.getY() + heightAxis));

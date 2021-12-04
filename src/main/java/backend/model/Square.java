@@ -1,6 +1,5 @@
 package backend.model;
 
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class  Square extends Rectangle{
