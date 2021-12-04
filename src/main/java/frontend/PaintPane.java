@@ -46,7 +46,6 @@ public class PaintPane extends BorderPane {
 	private ColorPicker bordeColor = new ColorPicker(Color.BLACK);
 	private ColorPicker rellenoColor = new ColorPicker(Color.YELLOW);
 
-	//private Text texto = new Text("Borde");		Para agregarlo al coso: buttonsBox.getChildren().add(texto);
 	// Dibujar una figura
 	private Point startPoint;
 
@@ -81,7 +80,8 @@ public class PaintPane extends BorderPane {
 		buttonsBox.setPrefWidth(100);
 		gc.setLineWidth(1);
 
-		bordeSlider.setShowTickLabels(true); //Cambios del slider
+        //Cambios del slider
+		bordeSlider.setShowTickLabels(true);
 		bordeSlider.setShowTickMarks(true);
 		bordeSlider.setMajorTickUnit(50);
 		bordeSlider.setMinorTickCount(5);
@@ -183,15 +183,12 @@ public class PaintPane extends BorderPane {
                 redrawCanvas();
 			}
 		});
-        for (Figure figure : selectedFigure) {
-			canvasState.remove(figure);
-		}
 
 		removeButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
                 for (Figure figure : selectedFigure) {
-						canvasState.remove(figure);
+                    canvasState.remove(figure);
                 }
                 redrawCanvas();
 			}
@@ -205,6 +202,7 @@ public class PaintPane extends BorderPane {
                 }
 			}
 		});
+
 		rellenoColor.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
@@ -213,6 +211,7 @@ public class PaintPane extends BorderPane {
                 }
 			}
 		});
+
 		bordeSlider.setOnMouseReleased( event -> {
 			refreshFigureColors();
 		});
@@ -226,6 +225,7 @@ public class PaintPane extends BorderPane {
                 redrawCanvas();
 			}
 		});
+
 		frenteButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
@@ -235,6 +235,7 @@ public class PaintPane extends BorderPane {
                 redrawCanvas();
 			}
 		});
+
 		setLeft(buttonsBox);
 		setRight(canvas);
 	}
