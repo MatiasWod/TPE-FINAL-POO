@@ -54,8 +54,11 @@ public class Line extends Figure{
     public Color getFigureColor() {
         return Color.WHITE;
     }
+
     @Override
-    public void setFigureColor(Color figureColor) {}
+    public void setFigureColor(Color figureColor) {
+        return; //no tiene area
+    }
 
     @Override
     public boolean contained(Rectangle r){
