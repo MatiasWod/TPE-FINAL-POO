@@ -15,12 +15,12 @@ public abstract class Figure implements Colorable,Movable {
 
      public abstract boolean equals(Object o);
 
-     public abstract void move( double diffX, double diffY);
-
      public abstract String toString();
 
      public abstract boolean contained(Rectangle r);
 
+     @Override
+     public abstract void move( double diffX, double diffY);
 
      @Override
      public Color getBordeColor() {
