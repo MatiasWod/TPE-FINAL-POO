@@ -170,7 +170,6 @@ public class PaintPane extends BorderPane {
 					statusPane.updateStatus("Ninguna figura encontrada");
 				}
 				redrawCanvas();
-
 			}
 		});
 		canvas.setOnMouseDragged(event -> {
@@ -178,12 +177,10 @@ public class PaintPane extends BorderPane {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
 				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
-				if (!selectedFigure.isEmpty()) {
-					for (Figure figure : selectedFigure) {
-						figure.move(diffX, diffY);
-					}
-					redrawCanvas();
-				}
+                for (Figure figure : selectedFigure) {
+                    figure.move(diffX, diffY);
+                }
+                redrawCanvas();
 			}
 		});
         for (Figure figure : selectedFigure) {
@@ -193,33 +190,27 @@ public class PaintPane extends BorderPane {
 		removeButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
-				if (!selectedFigure.isEmpty()) {
-					for (Figure figure : selectedFigure) {
+                for (Figure figure : selectedFigure) {
 						canvasState.remove(figure);
-					}
-				}
-				redrawCanvas();
+                }
+                redrawCanvas();
 			}
 		});
 
 		bordeColor.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
-				if (!selectedFigure.isEmpty()) {
-					for (Figure figure : selectedFigure) {
-						refreshFigureColors();
-					}
-				}
+                for (Figure figure : selectedFigure) {
+                    refreshFigureColors();
+                }
 			}
 		});
 		rellenoColor.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
-				if (!selectedFigure.isEmpty()) {
-					for (Figure figure : selectedFigure) {
-						refreshFigureColors();
-					}
-				}
+                for (Figure figure : selectedFigure) {
+                    refreshFigureColors();
+                }
 			}
 		});
 		bordeSlider.setOnMouseReleased( event -> {
@@ -229,23 +220,19 @@ public class PaintPane extends BorderPane {
 		fondoButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
-				if( ! selectedFigure.isEmpty()){
-					for(Figure figure: selectedFigure) {
-						canvasState.toBack(figure);
-					}
-					redrawCanvas();
-				}
+                for(Figure figure: selectedFigure) {
+                    canvasState.toBack(figure);
+                }
+                redrawCanvas();
 			}
 		});
 		frenteButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent actionEvent) {
-				if(!selectedFigure.isEmpty()){
-					for(Figure figure: selectedFigure) {
-						canvasState.toFront(figure);
-					}
-					redrawCanvas();
-				}
+                for(Figure figure: selectedFigure) {
+                    canvasState.toFront(figure);
+                }
+                redrawCanvas();
 			}
 		});
 		setLeft(buttonsBox);
@@ -253,14 +240,12 @@ public class PaintPane extends BorderPane {
 	}
 
 	private void refreshFigureColors(){
-		if(!selectedFigure.isEmpty()) {
-			for (Figure figure : selectedFigure) {
-				figure.setBordeColor(bordeColor.getValue());
-				figure.setBordeAncho(bordeSlider.getValue());
-				figure.setFigureColor(rellenoColor.getValue());
-			}
-			redrawCanvas();
-		}
+        for (Figure figure : selectedFigure) {
+            figure.setBordeColor(bordeColor.getValue());
+            figure.setBordeAncho(bordeSlider.getValue());
+            figure.setFigureColor(rellenoColor.getValue());
+        }
+        redrawCanvas();
 	}
 
 	private void redrawCanvas() {
