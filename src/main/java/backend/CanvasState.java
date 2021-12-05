@@ -7,7 +7,7 @@ import java.util.List;
 
 public class CanvasState {
 
-    private final ArrayList<Figure> list = new ArrayList<>();
+    private final List<Figure> list = new ArrayList<>();
 
     public void toFront(Figure figure){
         list.remove(figure);
