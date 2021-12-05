@@ -91,30 +91,30 @@ public class PaintPane extends BorderPane {
 		canvas.setOnMousePressed(event -> startPoint = new Point(event.getX(), event.getY()));
 		canvas.setOnMouseReleased(event -> {
 			Point endPoint = new Point(event.getX(), event.getY());
-			if (startPoint == null) {
-				return;
-			}
-			if ((endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY()) && !(lineButton.isSelected())) {
-				return;
-			}
-			Figure newFigure;
-			if (rectangleButton.isSelected()) {//Agregar if para elipse,square,linea
-				newFigure = new Rectangle(startPoint, endPoint, bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
-			} else if (circleButton.isSelected()) {
-				double circleRadius = Math.sqrt(Math.pow(endPoint.getX() - startPoint.getX(), 2) + Math.pow(endPoint.getY() - startPoint.getY(), 2));
-				newFigure = new Circle(startPoint, circleRadius, bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
-			} else if (elipseButton.isSelected()) {
-				newFigure = new Elipse(startPoint, Math.abs(startPoint.getY() - endPoint.getY()) / 2, Math.abs(endPoint.getX() - startPoint.getX()) / 2, bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
-			} else if (squareButton.isSelected()) {
-				newFigure = new Square(startPoint, new Point(endPoint.getX(), (startPoint.getY() + endPoint.getX() - startPoint.getX())), bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
-			} else if (lineButton.isSelected()) {
-				newFigure = new Line(startPoint, endPoint, bordeColor.getValue(), bordeSlider.getValue());
-			} else{
-				return;
-			}
+			try {
+				if ((endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY()) && !(lineButton.isSelected())) {
+					return;
+				}
+				Figure newFigure;
+				if (rectangleButton.isSelected()) {//Agregar if para elipse,square,linea
+					newFigure = new Rectangle(startPoint, endPoint, bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
+				} else if (circleButton.isSelected()) {
+					double circleRadius = Math.sqrt(Math.pow(endPoint.getX() - startPoint.getX(), 2) + Math.pow(endPoint.getY() - startPoint.getY(), 2));
+					newFigure = new Circle(startPoint, circleRadius, bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
+				} else if (elipseButton.isSelected()) {
+					newFigure = new Elipse(startPoint, Math.abs(startPoint.getY() - endPoint.getY()) / 2, Math.abs(endPoint.getX() - startPoint.getX()) / 2, bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
+				} else if (squareButton.isSelected()) {
+					newFigure = new Square(startPoint, new Point(endPoint.getX(), (startPoint.getY() + endPoint.getX() - startPoint.getX())), bordeColor.getValue(), bordeSlider.getValue(), rellenoColor.getValue());
+				} else if (lineButton.isSelected()) {
+					newFigure = new Line(startPoint, endPoint, bordeColor.getValue(), bordeSlider.getValue());
+				} else {
+					return;
+				}
 			canvasState.addFigure(newFigure);
-			startPoint = null;
 			redrawCanvas();
+			}catch (Exception e){
+				statusPane.updateStatus(e.getMessage());
+			}
 		});
 
 		canvas.setOnMouseMoved(event -> {
