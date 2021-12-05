@@ -1,4 +1,4 @@
-#TPE-POO-FINAL
+#TPE-FINAL-POO
 
 Autores:
 
