@@ -136,21 +136,20 @@ public class PaintPane extends BorderPane {
 
 		canvas.setOnMouseClicked(event -> {
 			Point eventPoint = new Point(event.getX(), event.getY());
-			boolean pressed=true;
 			if(selectionButton.isSelected()) {
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
 				boolean found = false;
-
+				boolean pressed= false;
 				Rectangle rectSelection = new Rectangle(startPoint, eventPoint, Color.BLACK, 0, Color.BLACK);
-				for (Figure figure : canvasState.figures()) {
-					if (figure.contained(rectSelection)) {
-						selectedFigure.add(figure);
-						label.append(" , ").append(figure);
-						found=true;
-						pressed=false;
+					for (Figure figure : canvasState.figures()) {
+						if (figure.contained(rectSelection)) {
+							pressed=true;
+							found = true;
+							selectedFigure.add(figure);
+							label.append(" , ").append(figure);
+						}
 					}
-				}
-				if(pressed){
+				if(!pressed) {
 					for (Figure figure : canvasState.figures()) {
 						if (figure.pointBelongs(eventPoint)) {
 							found = true;
