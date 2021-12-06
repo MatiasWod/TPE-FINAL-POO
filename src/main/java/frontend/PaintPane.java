@@ -51,13 +51,8 @@ public class PaintPane extends BorderPane {
 	// Seleccionar una figura
 	private final List<Figure> selectedFigure = new ArrayList<>();
 
-	// StatusBar
-	private final StatusPane statusPane;
-
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
-
 		this.canvasState = canvasState;
-		this.statusPane = statusPane;
 		ToggleButton[] toggleArr = {selectionButton, rectangleButton, circleButton, elipseButton, squareButton, lineButton};
 		Control[] toolsArr = {selectionButton, rectangleButton, circleButton, elipseButton, squareButton, lineButton, removeButton, fondoButton,
 				frenteButton, bordeColor, bordeSlider, rellenoColor};
@@ -194,7 +189,7 @@ public class PaintPane extends BorderPane {
 			@Override
 			public void handle(ActionEvent actionEvent) {
                 for (Figure figure : selectedFigure) {
-                    refreshFigureColors();
+                    refreshFigureColors(figure);
                 }
 			}
 		});
@@ -203,13 +198,14 @@ public class PaintPane extends BorderPane {
 			@Override
 			public void handle(ActionEvent actionEvent) {
                 for (Figure figure : selectedFigure) {
-                    refreshFigureColors();
+                    refreshFigureColors(figure);
                 }
 			}
 		});
 
 		bordeSlider.setOnMouseReleased( event -> {
-			refreshFigureColors();
+			for (Figure figure:selectedFigure)
+				refreshFigureColors(figure);
 		});
 
 		fondoButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -236,13 +232,11 @@ public class PaintPane extends BorderPane {
 		setRight(canvas);
 	}
 
-	private void refreshFigureColors(){
-        for (Figure figure : selectedFigure) {
+	private void refreshFigureColors(Figure figure){
             figure.setBordeColor(bordeColor.getValue());
             figure.setBordeAncho(bordeSlider.getValue());
             figure.setFigureColor(rellenoColor.getValue());
-        }
-        redrawCanvas();
+        	redrawCanvas();
 	}
 
 	private void redrawCanvas() {
